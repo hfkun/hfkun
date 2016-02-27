@@ -9,7 +9,6 @@ jQuery(document).ready(function($){
 		var selected = $(this);
 		selected.parent('li').addClass('cd-selected').siblings('li').removeClass('cd-selected');
 		updateSelectedNav('close');
-		//alert(12);
 	});
 
 	$(window).on('resize', function(){
