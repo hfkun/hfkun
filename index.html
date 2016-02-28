@@ -1,47 +1,65 @@
 <!doctype html>
 <html lang="zh-CN" class="no-js">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="个人网站">
-	
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
-	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/style.css">
-  	
-	<title>Hfkun.Github</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="个人网站">
 
-	<script src="lib/modernizr.js"></script>
-	<!-- 只让 IE 8 以及更低版本的浏览器下载该脚本 -->
-	<!--[if (lt IE 9) & (!IEMobile)]><script src="lib/respond.min.js"></script><![endif]-->
-	<!--IE9以下版本支持HTML5元素-->
-	<!--[if lt IE 9]><script src="lib/html5.js"></script><![endif]-->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="js/mytree/css/mytree.css">
+    <link rel="stylesheet" href="css/common.css">
+
+    <title>Hfkun.Github</title>
+
+    <script src="lib/modernizr.js"></script>
+    <!-- 只让 IE 8 以及更低版本的浏览器下载该脚本 -->
+    <!--[if (lt IE 9) & (!IEMobile)]><script src="lib/respond.min.js"></script><![endif]-->
+    <!--IE9以下版本支持HTML5元素-->
+    <!--[if lt IE 9]><script src="lib/html5.js"></script><![endif]-->
 </head>
-<body ng-app>
-	<header class="cd-header">
-		<a href="javascript:;" class="cd-logo"><img src="img/logo.png" alt="Logo"></a>
-		<a href="javascript:;" class="cd-3d-nav-trigger">Menu<span></span></a>
-	</header>
-	
-	<main>
-		<div ng-include src="currentTpl" ng-init="currentTpl='view/personal/me.html'"></div>
-	</main>
-	
-	<nav class="cd-3d-nav-container">
-		<ul class="cd-3d-nav">
-			<li class="cd-selected"><a href="javascript:;" ng-click="currentTpl='view/personal/me.html'">个人中心</a></li>
-			<li><a href="javascript:;" ng-click="currentTpl='view/projects/projects.html'">练习Demo</a></li>
-			<li><a href="javascript:;" ng-click="currentTpl='view/learn/learn.html'">学习笔记</a></li>
-			<li><a href="javascript:;" ng-click="currentTpl='view/node/node.html'">个人博文</a></li>
-		</ul>
-
-		<span class="cd-marker color-1"></span>	
-	</nav>
+<body>
+<div class="container">
+    <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+        <div class="nav-collapse">
+            <ul id="treenode" class="column-sidebar-menu"></ul>
+        </div>
+    </div>
+</div>
 
 <script src="lib/jquery-1.11.1.min.js"></script>
-<script src="lib/angularjs/angular.min.js"></script>
-<script src="js/main.js"></script>
+<script src="js/util.js"></script>
+<script src="js/mytree/js/mytree.js"></script>
+<script>
+    var data = [{itemSrc:'',title:'我的首页',icon:'glyphicon glyphicon-home'},
+        {title:'练习小项目',icon:'glyphicon glyphicon-briefcase',children:[
+            {itemSrc:'',title:'myhibernate'},
+            {itemSrc:'',title:'myssh'},
+            {itemSrc:'',title:'myspringboot'}
+        ]},
+        {itemSrc:'',title:'学习笔记',icon:'glyphicon glyphicon-book',children:[
+            {itemSrc:'',title:'HTML/CSS',children:[
+                {itemSrc:'https://www.zybuluo.com/hfkun/note/293728',title:'HTML5学习笔记'}
+            ]},
+            {itemSrc:'',title:'JS',children:[
+                {itemSrc:'https://www.zybuluo.com/hfkun/note/296681',title:'前端数据绑定的总结'}
+            ]},
+            {itemSrc:'',title:'Database',children:[
+                {itemSrc:'https://www.zybuluo.com/hfkun/note/295200',title:'常用数据库连接池的使用（spring整合）'}
+            ]},
+            {itemSrc:'',title:'JAVA',children:[
+                {itemSrc:'',title:'Collection总结'}
+            ]},
+            {itemSrc:'',title:'MVC',children:[
+                {itemSrc:'',title:'常用MVC控制器总结'}
+            ]}
+        ]},
+        {itemSrc:'',title:'博客文章',icon:'glyphicon glyphicon-edit',children:[
+            {itemSrc:'',title:'裁判文书要素提取的准确性'},
+            {itemSrc:'',title:'缓存的方式'}
+        ]},];
+    MyTreeBuilder.init($("#treenode"), data);
+</script>
 </body>
 </html>

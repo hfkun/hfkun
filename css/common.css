@@ -1,0 +1,365 @@
+/*********************
+ GENERAL UI COLORS 
+*********************/
+
+/***
+Colors
+blue:  #4b8df8
+light blue: #bfd5fa
+red: #e02222
+yellow: #ffb848
+green: #35aa47
+purple: #852b99
+dark: #555555;
+light grey: #fafafa;
+***/
+
+/* general body settings */
+body { 
+  color: #000; 
+  /* font-family: 'Open Sans', sans-serif; */
+  padding: 0px !important;
+  margin: 0px !important;
+  font-size:14px; 
+  direction: ltr;
+  line-height: 1;
+}
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, main, canvas {
+  display: block;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*
+Internet Explorer 10 doesn't differentiate device width from viewport width, and thus doesn't 
+properly apply the media queries in Bootstrap's CSS. To address this, 
+you can optionally include the following CSS and JavaScript to work around this problem until Microsoft issues a fix.
+*/
+@-webkit-viewport { 
+  width: device-width; 
+}
+
+@-moz-viewport { 
+  width: device-width; 
+}
+
+@-ms-viewport { 
+  width: device-width; 
+}
+
+@-o-viewport { 
+  width: device-width; 
+}
+
+@viewport { 
+  width: device-width; 
+}
+
+/* Internet Explorer 10 doesn't differentiate device width from viewport width, 
+and thus doesn't properly apply the media queries in Bootstrap's CSS. To address this, following CSS code applied */
+@-ms-viewport { 
+  width: auto !important; 
+}
+
+/***
+Custom Scrollbars
+***/
+
+::-webkit-scrollbar {  
+    width: 10px;
+}  
+
+::-webkit-scrollbar-track {  
+    background-color: #eaeaea;  
+    border-left: 1px solid #cecece;  
+}  
+
+::-webkit-scrollbar-thumb {  
+    background-color: #cecece;  
+}  
+
+::-webkit-scrollbar-thumb:hover {  
+    background-color: #aaa;  
+}  
+
+::-webkit-scrollbar-track {
+    border-radius: 0;
+    box-shadow: none;
+    border: 0; 
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    box-shadow: none;
+    border: 0; 
+}
+
+/***
+General typography 
+***/
+h1 small,
+h2 small,
+h3 small, 
+h4 small, 
+h5 small,
+h6 small {
+  color: #444;
+}
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 {
+  font-weight: 300 !important;
+}
+
+h1.block, 
+h2.block, 
+h3.block, 
+h4.block, 
+h5.block, 
+h6.block {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+a {
+  text-shadow: none !important;
+}
+
+/***
+Fix link outlines after click
+***/
+a,a:focus, a:hover, a:active {
+  outline: 0;
+}
+
+/***
+General backgrounds. Can be applied to any block or panel
+***/
+
+.bg-blue {
+  background-image: none !important;
+  background-color: #4b8df8 !important;
+  border-color:#4b8df8 !important;
+  color: #fff !important;
+}
+
+.bg-red {
+  background-image: none !important;
+  background-color: #e02222 !important;
+  border-color: #e02222 !important;
+  color: #fff !important;
+}
+
+.bg-yellow {
+  background-image: none !important;
+  background-color: #ffb848 !important;
+  border-color: #ffb848 !important;
+  color: #fff !important;
+}
+
+.bg-green {
+  background-image: none !important;
+  background-color: #35aa47 !important;
+  border-color: #35aa47 !important;
+  color: #fff !important;
+}
+
+.bg-purple {
+  background-image: none !important;
+  background-color: #852b99 !important;
+  border-color: #852b99 !important;
+  color: #fff !important;
+}
+
+.bg-dark {
+  background-image: none !important;
+  background-color: #555555 !important;
+  border-color: #555555 !important;
+  color: #fff !important;
+}
+
+.bg-grey {
+  background-image: none !important;
+  background-color: #fafafa !important;
+  border-color: #fafafa !important;
+}
+
+/***
+Font Awesome Icons
+***/
+
+[class^="fa-"],
+[class*=" fa-"] {
+  display: inline-block;
+  margin-top: 1px;
+  font-size: 14px;
+  *margin-right: .3em;
+  line-height: 14px;
+}
+
+/***
+Make font awesome icons fixed width(latest version issue)
+***/
+
+li [class^="fa-"],
+li [class*=" fa-"] {
+  display: inline-block;
+  width: 1.25em;
+  text-align: center;
+}
+li [class^="fa-"].icon-large,
+li [class*=" fa-"].icon-large {
+  /* increased font size for icon-large */
+  width: 1.5625em;
+}
+
+.icon-default {
+  color: #ccc;
+}
+
+.icon-success {
+  color: #468847;
+}
+
+.icon-info {
+  color: #27a9e3; 
+}
+
+.icon-warning {
+  color: #dbc056;
+}
+
+.icon-danger {
+  color: #B94A48;
+}
+
+/***
+General HR
+***/
+
+hr {
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid #E0DFDF;
+  border-bottom: 1px solid #FEFEFE;
+}
+
+/***
+Tools
+***/
+
+.display-none,
+.display-hide {
+  display: none;
+}
+
+.no-space {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.no-margin {
+  margin:0;
+}
+.no-border {
+  border:0 !important;
+}
+.margin-top-10 {
+  margin-top: 10px !important;
+}
+.margin-top-20 {
+  margin-top: 20px !important;
+}
+.margin-bottom-5 {
+  margin-bottom: 5px;
+}
+.margin-bottom-10 {
+  margin-bottom: 10px !important;
+}
+.margin-bottom-15 {
+  margin-bottom: 15px !important;
+}
+.margin-bottom-20 {
+  margin-bottom: 20px !important;
+}
+.margin-bottom-25 {
+  margin-bottom: 25px !important;
+}
+.margin-bottom-50 {
+  margin-bottom: 50px !important;
+}
+.margin-left-50 {
+  margin-left: 50px !important;
+}
+.margin-right-10 {
+  margin-right: 10px !important;
+}
+.padding-4 {
+	padding: 4px !important;
+}
+.padding-50 {
+	padding: 50px !important;
+}
+.bold {
+  font-weight:600 !important;
+}
+
+.fix-margin {
+  margin-left: 0px !important
+}
+
+.border {
+  border: 1px solid red;
+}
+
+.inline {
+  display: inline;
+}
+
+.text-align-reverse {
+  text-align: right;
+}
+
+
+.font-weight-bold {font-weight: bold;}
+.text-align-right {text-align: right;}
+.padding-10 {padding: 10px;}
