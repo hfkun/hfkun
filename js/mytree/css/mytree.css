@@ -1,9 +1,8 @@
 .glyphicon {cursor: pointer;}
 
-.nav-collapse {margin-top: 30px;padding-top:5px;border: 1px solid #E5E5E5;}
-.nav-collapse .navClose {width: 42px;}
+.nav-collapse {margin-top: 30px;padding-top:5px;border: 1px solid #E5E5E5;margin-bottom:10px;}
 .nav-collapse:after {display: block;content:'';clear: both;}
-.column-sidebar-menu {padding-left:4px;list-style-type:none;}
+.column-sidebar-menu {padding-left:4px;list-style-type:none; padding-bottom: 4px;}
 .column-sidebar-menu input[type='checkbox'] {margin-right: 5px;}
 .column-sidebar-menu a {display: inline-block;width: 99%;padding: 10px;}
 .column-sidebar-menu a:hover {text-decoration: none;background-color: #E5E5E5;}
@@ -11,14 +10,11 @@
 .column-sidebar-menu .title-padding {padding-left: 14px;}
 .column-sidebar-menu .glyphicon-unchecked {float: right;margin-right: 10px;display: none;}
 .column-sidebar-menu .glyphicon-check {float: right;margin-right: 10px;}
-.column-sidebar-menu .title {display: inline-block; margin-left:10px; height: 20px; }
-.column-sidebar-menu .title-width1 {width: 185px;}
-.column-sidebar-menu .title-width3 {width: 135px;}
-.column-sidebar-menu .title-width4 {width: 150px;}
+.column-sidebar-menu .title { margin-left:10px; height: 20px; }
 .column-sidebar-menu .sub-menu {padding-left:0;list-style-type:none;}
 .column-sidebar-menu .sub-menu a {padding-left:30px;}
 .column-sidebar-menu .loop-sub-menu1 {padding-left:0;list-style-type:none;}
-.column-sidebar-menu .loop-sub-menu1 a {padding-left:34px;}
+.column-sidebar-menu .loop-sub-menu1 a {padding-left:36px;}
 .column-sidebar-menu .loop-sub-menu2 {display:none;padding-left:0;list-style-type:none;}
 .column-sidebar-menu .loop-sub-menu2 a {padding-left:60px;}
 .column-sidebar-menu .loop-sub-menu3 {display:none;padding-left:0;list-style-type:none;}
@@ -48,12 +44,4 @@
 .column-sidebar-menu .sub-menu .third-menu li {width: 200px;}
 .column-sidebar-menu .selected {background-color: #E5E5E5;}
 
-/* < 1200px */
-@media (max-width: 1200px) {
-	.nav-collapse .navClose {width: 38px;}
-	.column-sidebar-menu .title-width1 {width: 140px;}
-	.column-sidebar-menu .loop-title-width1 {width: 190px;}
-	.column-sidebar-menu .loop-title-width2 {width: 180px;}
-	.column-sidebar-menu .loop-title-width3 {width: 160px;}
-	.column-sidebar-menu .loop-title-width4 {width: 140px;}
-}
+

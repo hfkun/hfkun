@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="个人网站">
 
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="http://hfkun.github.io/favicon.png">
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="js/mytree/css/mytree.css">
     <link rel="stylesheet" href="css/common.css">
@@ -18,6 +18,34 @@
     <!--[if (lt IE 9) & (!IEMobile)]><script src="lib/respond.min.js"></script><![endif]-->
     <!--IE9以下版本支持HTML5元素-->
     <!--[if lt IE 9]><script src="lib/html5.js"></script><![endif]-->
+	<!-- 删除苹果默认的工具栏和菜单栏 -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<!-- 设置苹果工具栏颜色 -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<!-- 忽略页面中的数字识别为电话，忽略email识别 -->
+	<meta name="format-detection" content="telphone=no, email=no">
+	<!-- 启用360浏览器的极速模式(webkit) -->
+	<meta name="renderer" content="webkit">
+	<!-- 避免IE使用兼容模式 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+	<meta name="HandheldFriendly" content="true">
+	<!-- 微软的老式浏览器 -->
+	<meta name="MobileOptimized" content="320">
+	<!-- uc强制竖屏 -->
+	<meta name="screen-orientation" content="portrait">
+	<!-- QQ强制竖屏 -->
+	<meta name="x5-orientation" content="portrait">
+	<!-- UC强制全屏 -->
+	<meta name="full-screen" content="yes">
+	<!-- QQ强制全屏 -->
+	<meta name="x5-fullscreen" content="true">
+	<!-- UC应用模式 -->
+	<meta name="browsermode" content="application">
+	<!-- QQ应用模式 -->
+	<meta name="x5-page-mode" content="app">
+	<!-- windows phone 点击无高光 -->
+	<meta name="msapplication-tap-highlight" content="no">
 </head>
 <body>
 <div class="container">
@@ -32,11 +60,11 @@
 <script src="js/util.js"></script>
 <script src="js/mytree/js/mytree.js"></script>
 <script>
-    var data = [{itemsrc:'',title:'我的首页',icon:'glyphicon glyphicon-home'},
+    var data = [{itemsrc:'',title:'我的主页',icon:'glyphicon glyphicon-home'},
         {itemsrc:'',title:'练习小项目',icon:'glyphicon glyphicon-briefcase',children:[
-            {itemsrc:'',title:'myhibernate'},
-            {itemsrc:'',title:'myssh'},
-            {itemsrc:'',title:'myspringboot'}
+            {itemsrc:'',title:'githibernate'},
+            {itemsrc:'',title:'gitssh'},
+            {itemsrc:'',title:'gitspringboot'}
         ]},
         {itemsrc:'',title:'学习笔记',icon:'glyphicon glyphicon-book',children:[
             {itemsrc:'',title:'HTML/CSS',children:[
