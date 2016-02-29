@@ -44,7 +44,7 @@ var MyTreeBuilder = {
 					$("<span class='glyphicon glyphicon-star-empty'>").appendTo(newA);
 				}
 			}
-			$("<span class='title loop-title-width"+level+"'>").attr("title",list[i].title).html(list[i].title).appendTo(newA);
+			$("<span class='title'>").attr("title",list[i].title).html(list[i].title).appendTo(newA);
 		}
 	},
 	init: function(container ,list){
