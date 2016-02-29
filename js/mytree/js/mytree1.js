@@ -8,20 +8,19 @@ function hasChildren(col){
 var MyTreeBuilder = {
 	renderByLevel: function(container, list, level){
 		for(var i=0; i<list.length; i++){
-			if(!list[i]) continue;
 			var newLi = $("<li>").appendTo(container);
 			var itemSrc = list[i].itemsrc || "javascript:;";
 			var itemTarget = list[i].itemsrc?"_blank":"";
-			var newA = $("<a>").attr("href", itemSrc).attr("target",itemTarget).appendTo(newLi);
+			var newA = $("<a href='"+itemSrc+"' target='"+itemTarget+"'>").appendTo(newLi);
 			if(hasChildren(list[i])){
 				var newSpan;
 				if(list[i].icon){
-					newSpan = $("<span>").attr("class", list[i].icon).attr("aria-hidden", "true").attr("style", "margin-right:2px").appendTo(newA);
+					newSpan = $("<span class='"+list[i].icon+"' aria-hidden='true' style='margin-right:2px;'>").appendTo(newA);
 				}else{
 					if(level === 1){
-						newSpan = $("<span>").attr("class", "glyphicon glyphicon-menu-down").attr("aria-hidden", "true").appendTo(newA);
+						newSpan = $("<span class='glyphicon glyphicon-menu-down' aria-hidden='true'>").appendTo(newA);
 					}else{
-						newSpan = $("<span>").attr("class", "glyphicon glyphicon-menu-right").attr("aria-hidden", "true").appendTo(newA);
+						newSpan = $("<span class='glyphicon glyphicon-menu-right' aria-hidden='true'>").appendTo(newA);
 					}
 				}
 				newSpan.click(function(e){
@@ -36,16 +35,16 @@ var MyTreeBuilder = {
 					}
 					HFK.Util.stopEvent(e);
 				});
-				var ul2 = $("<ul>").attr("class","loop-sub-menu"+level).appendTo(newLi);
+				var ul2 = $("<ul class='loop-sub-menu"+level+"'>").appendTo(newLi);
 				MyTreeBuilder.renderByLevel(ul2, list[i].children, level+1);
 			}else{
 				if(list[i].icon){
-					newSpan = $("<span>").attr("class", list[i].icon).attr("aria-hidden", "true").attr("style", "margin-right:2px").appendTo(newA);
+					newSpan = $("<span class='"+list[i].icon+"' aria-hidden='true' style='margin-right:2px;'>").appendTo(newA);
 				}else {
-					$("<span>").attr("class","glyphicon glyphicon-star-empty").appendTo(newA);
+					$("<span class='glyphicon glyphicon-star-empty'>").appendTo(newA);
 				}
 			}
-			$("<span>").attr("class","title").attr("title",list[i].title).html(list[i].title).appendTo(newA);
+			$("<span class='title'>").attr("title",list[i].title).html(list[i].title).appendTo(newA);
 		}
 	},
 	init: function(container ,list){
