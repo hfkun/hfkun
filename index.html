@@ -49,6 +49,11 @@
 </head>
 <body>
 <div class="container">
+    <div id="ie9belowWarn" class="alert alert-warning alert-dismissible" role="alert" style="display: none;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>提醒!</strong> 如果您正在使用IE8或以下版本的浏览器，建议升级浏览器或使用Google浏览器
+        <a href="javascript:;" style="margin-left: 20px;"> 忽略提醒</a>
+    </div>
     <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
         <div class="nav-collapse">
             <ul id="treenode" class="column-sidebar-menu"></ul>
@@ -88,6 +93,22 @@
             {itemsrc:'',title:'缓存的方式'}
         ]},];
     MyTreeBuilder.init($("#treenode"), data);
+
+    if(HFK.Util.getCookie("browserWarn") != "no"){
+        var browser = HFK.browser;
+        if(browser.ie){
+            if(browser.ie9below || browser.ie8Compat || browser.ie7Compat || browser.ie6Compat){
+                $("#ie9belowWarn").fadeIn();
+                $("#ie9belowWarn button").click(function(){
+                    $("#ie9belowWarn").fadeOut();
+                });
+                $("#ie9belowWarn a").click(function(){
+                    $("#ie9belowWarn").fadeOut();
+                    HFK.Util.setCookie("browserWarn","no",90);
+                });
+            }
+        }
+    }
 </script>
 </body>
 </html>

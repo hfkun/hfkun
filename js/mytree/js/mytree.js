@@ -1,3 +1,7 @@
+/**
+ * Created by hfk on 2015-11-19.
+ */
+
 //{code:01,title:标题,children:[]}
 function hasChildren(col){
 	if(col && col.children && col.children.length>0){
