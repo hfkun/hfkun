@@ -1,21 +1,61 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<!doctype html>
+<html lang="zh-CN" class="no-js">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>网页播放器</title>
-<style>
-div#myplayer { width:1000px;height:500px;margin: 5px auto; border:1px #cccccc solid;clear:both; }
-div#ckplayer {position:relative;z-index: 100;float:left;width:680px;height:490px;margin-left:5px;margin-top:5px;}
-div.list {height:488px;width:300px;float:left;margin-top:5px;margin-left: 8px;overflow-x:hidden;overflow-y:auto;border:1px #cccccc solid;}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="个人网站">
 
-div.list dl img{ width:70px;height:50px; float:left;}
-div.list dl strong { display:block; width:190px;float:left; padding-left:8px;}
-div.list dl span { display:block; width:190px;float:left; padding-left:8px;}
+	<link rel="shortcut icon" type="image/x-icon" href="http://hfkun.github.io/favicon.png">
+    <link rel="stylesheet" href="css/common.css">
+	<title>网页播放器</title>
 
-div.list dl dt { width:270px;float:left; }
-div.list dl dt a { display:block; line-height:18px;padding-top:10px;  border-bottom:1px #cccccc solid; height:65px; padding-top:10px; color:#333; font-size:12px; text-decoration:none; }
-div.list dl dt a:hover{  height:65px; padding-top:10px;  text-decoration:none; background:#efefef; }
-</style>
+    <script src="lib/modernizr.js"></script>
+    <!-- 只让 IE 8 以及更低版本的浏览器下载该脚本 -->
+    <!--[if (lt IE 9) & (!IEMobile)]><script src="lib/respond.min.js"></script><![endif]-->
+    <!--IE9以下版本支持HTML5元素-->
+    <!--[if lt IE 9]><script src="lib/html5.js"></script><![endif]-->
+	<!-- 删除苹果默认的工具栏和菜单栏 -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<!-- 设置苹果工具栏颜色 -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<!-- 忽略页面中的数字识别为电话，忽略email识别 -->
+	<meta name="format-detection" content="telphone=no, email=no">
+	<!-- 启用360浏览器的极速模式(webkit) -->
+	<meta name="renderer" content="webkit">
+	<!-- 避免IE使用兼容模式 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+	<meta name="HandheldFriendly" content="true">
+	<!-- 微软的老式浏览器 -->
+	<meta name="MobileOptimized" content="320">
+	<!-- uc强制竖屏 -->
+	<meta name="screen-orientation" content="portrait">
+	<!-- QQ强制竖屏 -->
+	<meta name="x5-orientation" content="portrait">
+	<!-- UC强制全屏 -->
+	<meta name="full-screen" content="yes">
+	<!-- QQ强制全屏 -->
+	<meta name="x5-fullscreen" content="true">
+	<!-- UC应用模式 -->
+	<meta name="browsermode" content="application">
+	<!-- QQ应用模式 -->
+	<meta name="x5-page-mode" content="app">
+	<!-- windows phone 点击无高光 -->
+	<meta name="msapplication-tap-highlight" content="no">
+	<style>
+		div#myplayer { width:1000px;height:500px;margin: 5px auto; border:1px #cccccc solid;clear:both; }
+		div#ckplayer {position:relative;z-index: 100;float:left;width:680px;height:490px;margin-left:5px;margin-top:5px;}
+		div.list {height:488px;width:300px;float:left;margin-top:5px;margin-left: 8px;overflow-x:hidden;overflow-y:auto;border:1px #cccccc solid;}
+
+		div.list dl img{ width:70px;height:50px; float:left;}
+		div.list dl strong { display:block; width:190px;float:left; padding-left:8px;}
+		div.list dl span { display:block; width:190px;float:left; padding-left:8px;}
+
+		div.list dl dt { width:270px;float:left; }
+		div.list dl dt a { display:block; line-height:18px;padding-top:10px;  border-bottom:1px #cccccc solid; height:65px; padding-top:10px; color:#333; font-size:12px; text-decoration:none; }
+		div.list dl dt a:hover{  height:65px; padding-top:10px;  text-decoration:none; background:#efefef; }
+	</style>
 </head>
 <body>
 
@@ -56,7 +96,7 @@ $(function(){
 			s:'0',//调用方式，0=普通方法（f=视频地址），1=网址形式,2=xml形式，3=swf形式(s>0时f=网址，配合a来完成对地址的组装)
 			c:'0',//是否读取文本配置,0不是，1是
 			x:'',//调用配置文件路径，只有在c=1时使用。默认为空调用的是ckplayer.xml
-			i:'http://www.ckplayer.com/images/loadimg3.jpg',//初始图片地址
+			i:'',//初始图片地址
 			d:'',//暂停时播放的广告，swf/图片,多个用竖线隔开，图片要加链接地址，没有的时候留空就行
 			u:'',//暂停时如果是图片的话，加个链接地址
 			l:'',//前置广告，swf/图片/视频，多个用竖线隔开，图片和视频要加链接地址
