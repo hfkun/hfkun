@@ -6,22 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="个人网站">
 
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/common.css">
+	<link rel="shortcut icon" type="image/x-icon" href="http://hfkun.github.io/favicon.png">
+    <link rel="stylesheet" href="http://hfkun.github.io/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://hfkun.github.io/js/mytree/css/mytree.css">
+    <link rel="stylesheet" href="http://hfkun.github.io/css/common.css">
 
-    <title>Hfkun.Github</title>
+    <title>Hfkun.Home</title>
 
-    <script src="lib/modernizr.js"></script>
+    <script src="http://hfkun.github.io/lib/modernizr.js"></script>
     <!-- 只让 IE 8 以及更低版本的浏览器下载该脚本 -->
-    <!--[if (lt IE 9) & (!IEMobile)]><script src="lib/respond.min.js"></script><![endif]-->
+    <!--[if (lt IE 9) & (!IEMobile)]><script src="http://hfkun.github.io/lib/respond.min.js"></script><![endif]-->
     <!--IE9以下版本支持HTML5元素-->
-    <!--[if lt IE 9]><script src="lib/html5.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="http://hfkun.github.io/lib/html5.js"></script><![endif]-->
+	<!-- 删除苹果默认的工具栏和菜单栏 -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<!-- 设置苹果工具栏颜色 -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<!-- 忽略页面中的数字识别为电话，忽略email识别 -->
+	<meta name="format-detection" content="telphone=no, email=no">
+	<!-- 启用360浏览器的极速模式(webkit) -->
+	<meta name="renderer" content="webkit">
+	<!-- 避免IE使用兼容模式 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+	<meta name="HandheldFriendly" content="true">
+	<!-- 微软的老式浏览器 -->
+	<meta name="MobileOptimized" content="320">
+	<!-- uc强制竖屏 -->
+	<meta name="screen-orientation" content="portrait">
+	<!-- QQ强制竖屏 -->
+	<meta name="x5-orientation" content="portrait">
+	<!-- UC强制全屏 -->
+	<meta name="full-screen" content="yes">
+	<!-- QQ强制全屏 -->
+	<meta name="x5-fullscreen" content="true">
+	<!-- UC应用模式 -->
+	<meta name="browsermode" content="application">
+	<!-- QQ应用模式 -->
+	<meta name="x5-page-mode" content="app">
+	<!-- windows phone 点击无高光 -->
+	<meta name="msapplication-tap-highlight" content="no">
     <style>
         body {background-color: #888888;}
         .c1, .c2, .c3, .c4 {width: 50%;height:50%; float:left;display: block; text-align: center;color: white;font-weight: bold;font-size:18px;opacity: 0.7;}
         a:link, a:visited { color: white; text-underline: none;}
-        a:hover { opacity: 1;}
+        a:hover { opacity: 1; text-underline: none;}
 
         #circon {position: absolute;background-color: #286090;text-align: center;vertical-align: middle;cursor: pointer;}
 
@@ -40,15 +69,15 @@
 </head>
 <body>
 <div id="cirnav">
-    <a class="c1" href="javascript:;">Home</a>
-    <a class="c2" href="javascript:;">Demo</a>
-    <a class="c3" href="javascript:;">Notes</a>
-    <a class="c4" href="javascript:;">Blog</a>
+    <a class="c1" href="http://hfkun.github.io/view/personal/media/list.html" target="_blank">视频分享</a>
+    <a class="c2" href="http://hfkun.github.io/view/personal/media/list.html" target="_blank">视频分享</a>
+    <a class="c3" href="http://hfkun.github.io/view/personal/media/list.html" target="_blank">视频分享</a>
+    <a class="c4" href="http://hfkun.github.io/view/personal/media/list.html" target="_blank">视频分享</a>
 </div>
 <div id="circon">停止</div>
 
-<script src="js/util.js"></script>
-<script src="lib/jquery-1.11.1.min.js"></script>
+<script src="http://hfkun.github.io/js/util.js"></script>
+<script src="http://hfkun.github.io/lib/jquery-1.11.1.min.js"></script>
 <script>
 
     var pageHeight = HFK.Util.getPageHeight(window);
@@ -105,7 +134,7 @@
     setInterval(function(){
         ctx.removeClass("addw").removeClass("add");
         $("#circon").html("停止");
-    }, 600000);
+    }, 120000);
 </script>
 
 </body>
