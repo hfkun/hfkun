@@ -25,7 +25,6 @@ div.list dl dt a:hover{  height:65px; padding-top:10px;  text-decoration:none; b
 </div>
 
 <script src="../lib/jquery-1.11.1.min.js"></script>
-<script src="js/offlights.js"></script>
 <script src="ckplayer/ckplayer.js"></script>
 <script>
 $(function(){
@@ -58,13 +57,13 @@ $(function(){
 			c:'0',//是否读取文本配置,0不是，1是
 			x:'',//调用配置文件路径，只有在c=1时使用。默认为空调用的是ckplayer.xml
 			i:'http://www.ckplayer.com/images/loadimg3.jpg',//初始图片地址
-			d:'http://www.ckplayer.com/down/pause6.1_1.swf|http://www.ckplayer.com/down/pause6.1_2.swf',//暂停时播放的广告，swf/图片,多个用竖线隔开，图片要加链接地址，没有的时候留空就行
+			d:'',//暂停时播放的广告，swf/图片,多个用竖线隔开，图片要加链接地址，没有的时候留空就行
 			u:'',//暂停时如果是图片的话，加个链接地址
 			l:'',//前置广告，swf/图片/视频，多个用竖线隔开，图片和视频要加链接地址
 			r:'',//前置广告的链接地址，多个用竖线隔开，没有的留空
 			t:'',//视频开始前播放swf/图片时的时间，多个用竖线隔开
 			y:'',//这里是使用网址形式调用广告地址时使用，前提是要设置l的值为空
-			z:'http://www.ckplayer.com/down/buffer.swf',//缓冲广告，只能放一个，swf格式
+			z:'',//缓冲广告，只能放一个，swf格式
 			e:'3',//视频结束后的动作，0是调用js函数，1是循环播放，2是暂停播放并且不调用广告，3是调用视频推荐列表的插件，4是清除视频流并调用js功能和1差不多，5是暂停播放并且调用暂停广告
 			v:'80',//默认音量，0-100之间
 			p:'1',//视频默认0是暂停，1是播放，2是不加载视频
@@ -99,25 +98,6 @@ $(function(){
 			var newAddr = "{f->http://movie.ks.js.cn/flv/2012/02/6-1.flv}";
 			CKobject.getObjectById('ckplayer_a1').newAddress(newAddr);
 		}
-		
-		//开关灯
-		var box = new LightBox();
-		function closelights(){//关灯
-			box.Show();
-			CKobject._K_('ckplayer').style.width='940px';
-			CKobject._K_('ckplayer').style.height='550px';
-			CKobject.getObjectById('ckplayer_a1').width=940;
-			CKobject.getObjectById('ckplayer_a1').height=550;
-		}
-		function openlights(){//开灯
-			box.Close();
-			CKobject._K_('ckplayer').style.width='680px';
-			CKobject._K_('ckplayer').style.height='490px';
-			CKobject.getObjectById('ckplayer_a1').width=680;
-			CKobject.getObjectById('ckplayer_a1').height=490;
-		}
-		
-		
 		
 		function changeStream(seqNo,movieAddr){
 			$(".list dl dt a").css("background","#ffffff").css("color","#333");
