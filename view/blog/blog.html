@@ -7,12 +7,13 @@
     <meta name="description" content="个人网站">
 
     <link rel="shortcut icon" type="image/x-icon" href="http://hfkun.github.io/favicon.png">
-    <link rel="stylesheet" href="http://hfkun.github.io/lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://hfkun.github.io/css/common.css">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/blog.css">
 
     <title>Hfkun.Blog</title>
 
-    <script src="http://hfkun.github.io/lib/modernizr.js"></script>
+    <script src="../../lib/modernizr.js"></script>
     <!-- 只让 IE 8 以及更低版本的浏览器下载该脚本 -->
     <!--[if (lt IE 9) & (!IEMobile)]><script src="http://hfkun.github.io/lib/respond.min.js"></script><![endif]-->
     <!--IE9以下版本支持HTML5元素-->
@@ -47,15 +48,54 @@
     <meta name="msapplication-tap-highlight" content="no">
 </head>
 <body>
+<div class="navbar-top">
+    <div class="container">
+        <div>
+            <a class="navbar-brand" href="http://hfkun.github.io">Hfkun</a>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="javascript:;">我的博客</a></li>
+                <li><a href="javascript:;">收藏的博客</a></li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="page-header">
+    <div class="container">
+        <h1>博客分享基地</h1>
+        <p>一个人的智慧是基础，一群人的智慧是力量！</p>
+    </div>
+</div>
 <div class="container">
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="jumbotron">
+                <h1>我的标题1</h1>
+                <div class="blog-time">2010-01-04</div>
+                <p>这是内容，这是内容这是内哦你</p>
+                <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+            </div>
+            <div class="jumbotron">
+                <h1>Hello, world!</h1>
+                <p>...</p>
+                <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+            </div>
+        </div>
+        <div class="col-lg-3 border">b</div>
+    </div>
 </div>
 
-<script src="http://hfkun.github.io/lib/jquery-1.11.1.min.js"></script>
+<script src="../../lib/jquery-1.11.1.min.js"></script>
 <script src="http://hfkun.github.io/js/util.js"></script>
 <script src="http://hfkun.github.io/js/mytree/js/mytree.js"></script>
 <script>
-
-
+    $.get("http://hfkun.github.io/data/myblog.json",function(data){
+        console.info(data);
+    },"json");
 </script>
 </body>
 </html>
