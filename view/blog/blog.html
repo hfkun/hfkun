@@ -48,22 +48,24 @@
     <meta name="msapplication-tap-highlight" content="no">
 </head>
 <body>
-<div class="navbar-top">
+<header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
     <div class="container">
-        <div>
-            <a class="navbar-brand" href="http://hfkun.github.io">Hfkun</a>
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://hfkun.github.io" class="navbar-brand">Hfkun</a>
+        </div>
+        <nav id="bs-navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
             <ul class="nav navbar-nav">
                 <li><a class="nav-btn-selected" href="javascript:;" data-target="myblog">我的博客</a></li>
                 <li><a href="javascript:;" data-target="collectblog">收藏的博客</a></li>
             </ul>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                </div>
-            </form>
-        </div>
+        </nav>
     </div>
-</div>
+</header>
 <div class="page-header">
     <div class="container">
         <h1>博客分享基地</h1>
@@ -72,17 +74,27 @@
 </div>
 <div class="container">
     <div class="row">
-        <div id="blog-container" class="col-lg-9"></div>
-        <div class="col-lg-3 border">b</div>
+        <div id="blog-container" class="col-lg-9 col-md-9 col-sm-9 col-xs-12"></div>
+        <div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+            <input id="searchInput" type="text" class="form-control" placeholder="Search">
+            <div id="last-blogs" class="last-blogs">
+                <strong>最近博客</strong>
+            </div>
+        </div>
     </div>
 </div>
 
 <script src="../../lib/jquery-1.11.1.min.js"></script>
+<script src="http://hfkun.github.io/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="http://hfkun.github.io/js/util.js"></script>
 <script src="http://hfkun.github.io/js/mytree/js/mytree.js"></script>
 <script>
+    var blogsTmp = [];
     function initBlog(container, blogs){
         container.html("");
+        if(blogs.length == 0){
+            return false;
+        }
         for(var i=0; i<blogs.length; i++){
             $("<div>").attr("class", "jumbotron")
                     .append($("<h1>").append($("<a>").attr("class","blog-title").attr("href",blogs[i].itemsrc).attr("target","_blank").html(blogs[i].title)))
@@ -92,16 +104,45 @@
                     .appendTo(container);
         }
     }
+    function initLastBlog(container, blogs){
+        if(blogs.length == 0){
+            return false;
+        }
+        for(var i=blogs.length-1; i>=0; i--){
+            if(i>blogs.length -6){
+                $("<a>").attr("href",blogs[i].itemsrc).attr("target","_blank").html(blogs[i].title).appendTo(container);
+            }else{
+                break;
+            }
+        }
+    }
     $(function(){
         $.get("http://hfkun.github.io/data/myblog.json",function(data){
-            initBlog($("#blog-container"), data)
+            initBlog($("#blog-container"), data);
+            initLastBlog($("#last-blogs"), data);
+            blogsTmp = data;
         },"json");
 
         $(".navbar-nav").find("a").click(function(){
             $(this).parent("li").siblings().children(".nav-btn-selected").removeClass("nav-btn-selected").end().end().end().addClass("nav-btn-selected");
             $.get("http://hfkun.github.io/data/"+$(this).attr("data-target")+".json",function(data){
-                initBlog($("#blog-container"), data)
+                initBlog($("#blog-container"), data);
             },"json");
+        });
+
+        $("#searchInput").keyup(function(e){
+            var data = [];
+            if(blogsTmp.length == 0){
+                return false;
+            }
+            if(e.keyCode == 13){
+                for(var i=0; i<blogsTmp.length; i++){
+                    if(blogsTmp[i].abstract.indexOf(e.value) > -1){
+                        data.push(blogsTmp[i]);
+                    }
+                }
+                initBlog($("#blog-container"), data);
+            }
         });
     });
 </script>
