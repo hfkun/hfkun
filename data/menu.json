@@ -22,7 +22,7 @@
       {"itemsrc":"","title":"常用MVC控制器总结"}
     ]}
   ]},
-  {"itemsrc":"","title":"博客文章","icon":"glyphicon glyphicon-edit","children":[
+  {"itemsrc":"http://hfkun.github.io/view/blog/blog.html","title":"博客文章","icon":"glyphicon glyphicon-edit","children":[
     {"itemsrc":"","title":"裁判文书要素提取的准确性"},
     {"itemsrc":"https://www.zybuluo.com/hfkun/note/296985","title":"更有效的缓存方式"},
     {"itemsrc":"https://www.zybuluo.com/hfkun/note/302029","title":"Jpa懒加载的折腾记录"}

@@ -53,7 +53,7 @@
         <div>
             <a class="navbar-brand" href="http://hfkun.github.io">Hfkun</a>
             <ul class="nav navbar-nav">
-                <li><a href="javascript:;" data-target="myblog">我的博客</a></li>
+                <li><a class="nav-btn-selected" href="javascript:;" data-target="myblog">我的博客</a></li>
                 <li><a href="javascript:;" data-target="collectblog">收藏的博客</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search">
@@ -98,6 +98,7 @@
         },"json");
 
         $(".navbar-nav").find("a").click(function(){
+            $(this).parent("li").siblings().children(".nav-btn-selected").removeClass("nav-btn-selected").end().end().end().addClass("nav-btn-selected");
             $.get("http://hfkun.github.io/data/"+$(this).attr("data-target")+".json",function(data){
                 initBlog($("#blog-container"), data)
             },"json");
