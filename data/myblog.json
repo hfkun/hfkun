@@ -1,5 +1,5 @@
 [
   {"title":"裁判文书要素提取的准确性", "time":"2015-03-11", "itemsrc":"", "abstract":"摘要"},
   {"title":"更有效的缓存方式", "time":"2015-07-19", "itemsrc":"https://www.zybuluo.com/hfkun/note/296985", "abstract":"项目中遇到的问题，我来简单描述一下：数据库是老版本的全文数据库，别说sql语法多奇葩，就连稳定性也让人不放心。新华社新华智讯这个项目的稿件量大概在2w条左右，首页显示的栏目有20个之多。对于这样的数据服务器，要等首页完全加载完，得等上好几秒钟。这里需要花这么久有一个原因是数据库服务器稳定性不给力，在连续执行几条SQL语句，就有可能抛异常，这里得考虑出异常之后重新执行。 "},
-  {"title":"Jpa懒加载的折腾记录", "time":"2016-01-03", "itemsrc":"https://www.zybuluo.com/hfkun/note/302029", "abstract":"JPA规范中定义了几种对象关系：one-to-one、one-to-many、many-to-one、many-to-many。 在这里用many-to-one和one-to-many来分析。根据上面的对象定义代码，当我们查询所有部门时，结果是：除了员工信息以外的其他信息，但是保留了getEmployee()这个方法，当调用getEmployee()方法时，JPA又去查数据库了，并且把结果赋值给employees属性。"}
+  {"title":"Jpa懒加载的折腾记录", "time":"2016-01-03", "itemsrc":"https://www.zybuluo.com/hfkun/note/302029", "abstract":"JPA规范中定义了几种对象关系：one-to-one、one-to-many、many-to-one、many-to-many。 <br/>在这里用many-to-one和one-to-many来分析。根据上面的对象定义代码，当我们查询所有部门时，结果是：除了员工信息以外的其他信息，但是保留了getEmployee()这个方法，当调用getEmployee()方法时，JPA又去查数据库了，并且把结果赋值给employees属性。"}
 ]

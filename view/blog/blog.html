@@ -53,8 +53,8 @@
         <div>
             <a class="navbar-brand" href="http://hfkun.github.io">Hfkun</a>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="javascript:;">我的博客</a></li>
-                <li><a href="javascript:;">收藏的博客</a></li>
+                <li><a href="javascript:;" data-target="myblog">我的博客</a></li>
+                <li><a href="javascript:;" data-target="collectblog">收藏的博客</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
@@ -72,19 +72,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-lg-9">
-            <div class="jumbotron">
-                <h1>我的标题1</h1>
-                <div class="blog-time">2010-01-04</div>
-                <p>这是内容，这是内容这是内哦你</p>
-                <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-            </div>
-            <div class="jumbotron">
-                <h1>Hello, world!</h1>
-                <p>...</p>
-                <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-            </div>
-        </div>
+        <div id="blog-container" class="col-lg-9"></div>
         <div class="col-lg-3 border">b</div>
     </div>
 </div>
@@ -93,9 +81,28 @@
 <script src="http://hfkun.github.io/js/util.js"></script>
 <script src="http://hfkun.github.io/js/mytree/js/mytree.js"></script>
 <script>
-    $.get("http://hfkun.github.io/data/myblog.json",function(data){
-        console.info(data);
-    },"json");
+    function initBlog(container, blogs){
+        container.html("");
+        for(var i=0; i<blogs.length; i++){
+            $("<div>").attr("class", "jumbotron")
+                    .append($("<h1>").append($("<a>").attr("class","blog-title").attr("href",blogs[i].itemsrc).attr("target","_blank").html(blogs[i].title)))
+                    .append($("<div>").attr("class","blog-time").html(blogs[i].time))
+                    .append($("<p>").html(blogs[i].abstract))
+                    .append($("<p>").append($("<a>").attr("class","btn btn-primary btn-lg").attr("href",blogs[i].itemsrc).attr("target","_blank").html("阅读全文")))
+                    .appendTo(container);
+        }
+    }
+    $(function(){
+        $.get("http://hfkun.github.io/data/myblog.json",function(data){
+            initBlog($("#blog-container"), data)
+        },"json");
+
+        $(".navbar-nav").find("a").click(function(){
+            $.get("http://hfkun.github.io/data/"+$(this).attr("data-target")+".json",function(data){
+                initBlog($("#blog-container"), data)
+            },"json");
+        });
+    });
 </script>
 </body>
 </html>
