@@ -1,5 +1,6 @@
 [
   {"title":"裁判文书要素提取的准确性", "time":"2015-03-11", "itemsrc":"https://www.zybuluo.com/hfkun/note/296983", "abstract":"最近在做一个关于文本识别和信息提取的项目，提取内容是浙江裁判文书。文书总数大概是350万，提取的内容包括案件基本信息、人员信息、审理判决信息等。我要做的事情，就是提取出关于人员、组织机构的基本信息。下面主要以人员信息中案件角色的提取为例子进行分析。一份裁判文书中包括的角色主要包括：原告、被告、代理人、代表人等。"},
   {"title":"更有效的缓存方式", "time":"2015-07-19", "itemsrc":"https://www.zybuluo.com/hfkun/note/296985", "abstract":"项目中遇到的问题，我来简单描述一下：数据库是老版本的全文数据库，别说sql语法多奇葩，就连稳定性也让人不放心。新华社新华智讯这个项目的稿件量大概在2w条左右，首页显示的栏目有20个之多。对于这样的数据服务器，要等首页完全加载完，得等上好几秒钟。这里需要花这么久有一个原因是数据库服务器稳定性不给力，在连续执行几条SQL语句，就有可能抛异常，这里得考虑出异常之后重新执行。 "},
-  {"title":"Jpa懒加载的折腾记录", "time":"2016-01-03", "itemsrc":"https://www.zybuluo.com/hfkun/note/302029", "abstract":"JPA规范中定义了几种对象关系：one-to-one、one-to-many、many-to-one、many-to-many。 <br/>在这里用many-to-one和one-to-many来分析。根据上面的对象定义代码，当我们查询所有部门时，结果是：除了员工信息以外的其他信息，但是保留了getEmployee()这个方法，当调用getEmployee()方法时，JPA又去查数据库了，并且把结果赋值给employees属性。"}
+  {"title":"Jpa懒加载的折腾记录", "time":"2016-01-03", "itemsrc":"https://www.zybuluo.com/hfkun/note/302029", "abstract":"JPA规范中定义了几种对象关系：one-to-one、one-to-many、many-to-one、many-to-many。 <br/>在这里用many-to-one和one-to-many来分析。根据上面的对象定义代码，当我们查询所有部门时，结果是：除了员工信息以外的其他信息，但是保留了getEmployee()这个方法，当调用getEmployee()方法时，JPA又去查数据库了，并且把结果赋值给employees属性。"},
+  {"title":"超时调用与间歇调用", "time":"2016-01-12", "itemsrc":"https://www.zybuluo.com/hfkun/note/310908", "abstract":"一般认为，使用超时调用来模拟间歇调用的是一种最佳模式。在开发环境下，很少使用真正的间歇调用，原因是后一个间歇调用可能会在前一个间歇调用结束之前启动。而像前面示例中那样使用超时调用，则完全可以避免这一点。所以，最好不要使用间歇调用。"}
 ]
