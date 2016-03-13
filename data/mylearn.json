@@ -1,0 +1,18 @@
+[
+  {"title":"HTML/CSS", "children":[
+    {"title":"HTML5学习笔记", "itemsrc":"https://www.zybuluo.com/hfkun/note/293728", "abstract":"HTML5是必修的内容，目前先总结基本常用的标签，关于canvas画图、媒体等以后补充。1、header  描述：header标签定义文档的页眉，通常是一些引导和导航信息。它不局限于写在网页头部，也可以写在网页内容里面。通常header标签至少包含（但不局限于）一个标题标记，还可以包括标签，还可以包括表格内容、标识、搜索表单、导航等。"}
+  ]},
+  {"title":"Database", "children":[
+    {"title":"常用数据库连接池的使用（spring整合）", "itemsrc":"https://www.zybuluo.com/hfkun/note/295200", "abstract":"jar包依赖(Maven管理)：<dependency><groupId>org.apache.commons</groupId><artifactId>commons-dbcp2</artifactId><version>2.1.1</version></dependency> XML配置文件：<!-- 配置外部数据库连接信息 --><context:property-placeholder location=\"classpath:persistence-mysql.properties\" />"}
+  ]},
+  {"title":"JS", "children":[
+    {"title":"继承的实现方式", "itemsrc":"https://www.zybuluo.com/hfkun/note/310886", "abstract":"(1) 使用最多 function Super(name){this.name = name; } function Sub(name){ Super.apply(this, arguments);  //继承实例属性 } Sub.prototype = new Super();  //继承公共方法    Sub.prototype.constructor = Sub;  //这句话的作用是避免了实例化子类时先实例化父类 (2) Object.create(new Super()); (3) 效果最好}"},
+    {"title":"前端数据绑定的总结", "itemsrc":"https://www.zybuluo.com/hfkun/note/296681", "abstract":"1、Angularjs  2、React  3、Mustache"}
+  ]},
+  {"title":"JAVA", "children":[
+    {"title":"Java集合工具类总结", "itemsrc":"https://www.zybuluo.com/hfkun/note/297218", "abstract":"以上代码我们可以看到，TreeMap其实是一个二叉树，每次添加一个新元素时，都跟当前元素对比，如果大，放在当前元素下层的右边，如果小，放在当前元素下层的左边。所以，使用TreeMap时，key是排了序的。同理TreeSet用到了TreeMap家族的key的特性，所以也是排序了的。"}
+  ]},
+  {"title":"MVC", "children":[
+    {"title":"常用MVC控制器总结", "itemsrc":"https://www.zybuluo.com/hfkun/note/297220", "abstract":"web.xml配置 <servlet> <servlet-name>jerseyServlet</servlet-name> <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class> <init-param> <param-name>jersey.config.server.provider.packages</param-name>  <param-value>com.hfkun.test.controller</param-value>  </init-param> <load-on-startup>1</load-on-startup>"}
+  ]}
+]
