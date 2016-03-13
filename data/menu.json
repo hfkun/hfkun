@@ -5,7 +5,7 @@
     {"itemsrc":"","title":"gitssh"},
     {"itemsrc":"","title":"gitspringboot"}
   ]},
-  {"itemsrc":"","title":"学习笔记","icon":"glyphicon glyphicon-book","children":[
+  {"itemsrc":"http://hfkun.github.io/view/learn/learn.html","title":"学习笔记","icon":"glyphicon glyphicon-book","children":[
     {"itemsrc":"","title":"HTML/CSS","children":[
       {"itemsrc":"https://www.zybuluo.com/hfkun/note/293728","title":"HTML5学习笔记"}
     ]},
