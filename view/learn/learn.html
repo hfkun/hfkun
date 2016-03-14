@@ -47,10 +47,10 @@
 	<meta name="msapplication-tap-highlight" content="no">
 	<style type="text/css">
 		.contain{padding: 50px;}
-		.mainTitle {text-align: center;font-size:30px;font-weight: bold;margin:20px auto;}
-		.title {font-size:25px; font-weight: bold;margin: 10px auto;}
+		.mainTitle {text-align: center;font-size:40px;font-weight: bold;margin:20px auto;}
+		.title {font-size:30px; font-weight: bold;margin: 10px auto;}
 		.item {padding: 20px 0; border-bottom: 1px dashed  gray;}
-		.menuTopClass {padding-left: 2em;font-weight: bold;margin: 10px auto;}
+		.menuTopClass {padding-left: 2em;font-weight: bold;margin: 10px auto;font-size: 20px;}
 		.item p{margin: 5px 0;text-indent: 2em;}
 		.item a{display: inline-block;margin-top: 5px;text-indent: 2em;}
 
@@ -68,8 +68,7 @@
 		<div class="row">
 			<div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
 				<div id="menu">
-					<ul id="menulist">
-					</ul>
+					<ul id="menulist"></ul>
 				</div>
 			</div>
 			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
@@ -84,10 +83,17 @@
 <script src="http://hfkun.github.io/lib/jquery-1.11.1.min.js"></script>
 <script>
 	var topScroll_arr = new Array();
+	var timeoutId;
+	var isOpenMenu = true;
 	function menuReOffset(){
-		$("#menu").animate({
-			"margin-top":($(window).scrollTop()+200)+"px"
-		},100);
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(function(){
+			$("#menu").animate({
+				"margin-top":($(window).scrollTop()+200)+"px"
+			},100, function(){
+				isOpenMenu = false;
+			});
+		}, 100);
 	}
 	function list(index){
 		var collUlNodes = $(".sublist");
@@ -102,11 +108,15 @@
 		menuReOffset();
 	}
 	function list2(index){
-		var collUlNodes = $(".sublist");
-		collUlNodes.each(function(i){
-			if(index==i){$(this).show();}
-			else{$(this).hide();}
-		});
+		if(isOpenMenu){
+			var collUlNodes = $(".sublist");
+			collUlNodes.each(function(i){
+				if(index==i){$(this).show();}
+				else{$(this).hide();}
+			});
+		}else{
+			isOpenMenu = true;
+		}
 		menuReOffset();
 	}
 	$(function(){
@@ -142,7 +152,7 @@
 			}
 
 			$(".menuTopClass").each(function(i){
-				topScroll_arr[i] = $(this).offset().top-20;
+				topScroll_arr[i] = $(this).offset().top-120;
 			});
 
 			var container = $(".contain").offset();
