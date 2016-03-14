@@ -132,12 +132,13 @@
 
         $("#searchInput").keyup(function(e){
             var data = [];
+            var searchText = $("#searchInput").val();
             if(blogsTmp.length == 0){
                 return false;
             }
             if(e.keyCode == 13){
                 for(var i=0; i<blogsTmp.length; i++){
-                    if(blogsTmp[i].abstract.indexOf(e.value) > -1){
+                    if(blogsTmp[i].title.indexOf(searchText) > -1 || blogsTmp[i].abstract.indexOf(searchText) > -1){
                         data.push(blogsTmp[i]);
                     }
                 }
