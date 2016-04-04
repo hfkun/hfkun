@@ -47,7 +47,8 @@
 	<meta name="msapplication-tap-highlight" content="no">
     <style>
         .item {display: block;margin-bottom: 20px;height: 200px; border: 1px solid #E5E5E5; text-align: center; line-height: 200px;}
-        a:hover {text-underline: none !important;}
+        a:hover,a:link,a:visited {text-decoration: none;}
+        a:hover {background-color:#83BFF7;color:white; box-shadow:2px 5px 6px #000; -moz-box-shadow:2px 5px 6px #000;-webkit-border-shadow:2px 5px 6px #000;}
     </style>
 </head>
 <body>
@@ -55,32 +56,7 @@
     <div class="page-header">
         <h1 style="font-size: 40px;">声音分享</h1>
     </div>
-    <div id="itemblox" class="row">
-        <!--<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <a class="item" href="javascript:;" target="_blank">寂寞沙洲冷</a>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <a class="item" href="javascript:;" target="_blank">寂寞沙洲冷</a>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <a class="item" href="javascript:;" target="_blank">寂寞沙洲冷</a>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <a class="item" href="javascript:;" target="_blank">寂寞沙洲冷</a>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <a class="item" href="javascript:;">寂寞沙洲冷</a>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <a class="item" href="javascript:;">寂寞沙洲冷</a>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <a class="item" href="javascript:;">寂寞沙洲冷</a>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <a class="item" href="javascript:;">寂寞沙洲冷</a>
-        </div>-->
-    </div>
+    <div id="itemblox" class="row"></div>
 </div>
 
 <script src="http://hfkun.github.io/js/util.js"></script>
@@ -91,25 +67,14 @@ $(function(){
         for(var i=0; i<data.length; i++){
             $("<div class='col-lg-3 col-md-3 col-sm-3 col-xs-6'><a class='item' href='"+data[i].href+"' target='_blank'>"+data[i].title+"</a></div>").appendTo($("#itemblox"));
         }
-
         $(".item").mouseover(function(){
             $(this).animate({
-                'background-color':'#83BFF7',
-                'color':'white',
-                'box-shadow':'5px 2px 6px #000',
-                '-moz-box-shadow':'5px 2px 6px #000',
-                '-webkit-border-shadow':'5px 2px 6px #000'
-            },1000,function(){
-                console.info(123);
-            });
+                'font-size':'20px'
+            },1000);
         });
         $(".item").mouseout(function(){
             $(this).animate({
-                'background-color':'white',
-                'color':'#337ab7',
-                'box-shadow':'0 0 #000',
-                '-moz-box-shadow':'0 0 #000',
-                '-webkit-border-shadow':'0 0 #000'
+                'font-size':'16px'
             },500);
         });
     },'json');

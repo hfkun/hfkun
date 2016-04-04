@@ -168,7 +168,6 @@ Fix link outlines after click
 ***/
 a,a:focus, a:hover, a:active {
   outline: 0;
-  text-underline: none;
 }
 
 /***
