@@ -154,10 +154,7 @@ $(function(){
 			},130);
 			
 			//视频切换
-			//CKobject.getObjectById('ckplayer_a1').newAddress(movieAddr);
-			var video=[movieAddr+'->video/mp4'];
-			flashvars.f = movieAddr;
-			CKobject.embed('ckplayer/ckplayer.swf','ckplayer','ckplayer_a1','100%','100%',false,flashvars,video,params);
+			CKobject.getObjectById('ckplayer_a1').newAddress(movieAddr);
 		}
 	},'json');
 });

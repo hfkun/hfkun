@@ -10,7 +10,5 @@
 {"seqNo":9,"title":"猫和老鼠","date":"2016-04-01","movieAddr":"{f->http://hfkun.github.io/view/personal/media/movies/mhls.flv}","titleimg":"images/mhls.png"},
 {"seqNo":10,"title":"拍照技巧","date":"2016-04-01","movieAddr":"{f->http://hfkun.github.io/view/personal/media/movies/pzjq.flv}","titleimg":"images/pzjq.png"},
 {"seqNo":11,"title":"我的声音","date":"2015-03-25","movieAddr":"{f->http://hfkun.github.io/view/personal/media/movies/my.flv}","titleimg":"images/my.jpg"},
-{"seqNo":12,"title":"我的影集","date":"2015-04-04","movieAddr":"{f->http://hfkun.github.io/view/personal/media/movies/hfkun_view.flv}","titleimg":"images/hfkun_view.jpg"},
-{"seqNo":13,"title":"mp41","date":"2015-03-25","movieAddr":"{f->http://hfkun.github.io/view/personal/media/movies/my.mp4}","titleimg":"images/my.jpg"},
-{"seqNo":14,"title":"mp42","date":"2015-03-25","movieAddr":"{f->http://hfkun.github.io/view/personal/media/movies/emjx.mp4}","titleimg":"images/my.jpg"}
+{"seqNo":12,"title":"我的影集","date":"2015-04-04","movieAddr":"{f->http://hfkun.github.io/view/personal/media/movies/hfkun_view.flv}","titleimg":"images/hfkun_view.jpg"}
 ]
