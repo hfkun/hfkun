@@ -10,7 +10,7 @@
         #scoreSpan{color: brown;}
         #res{margin-top: 10px; color: chocolate;}
         .box{width: 30px; height: 30px;border: 1px solid darkgray;position: absolute;z-index: 2;}
-        .box_{width: 30px; height: 30px;border: 0;position: absolute;z-index: 1;}
+        .box_{width: 30px; height: 30px;border: 1px dotted #F0F0F0;position: absolute;z-index: 1;}
         .drawc{border: 1px solid gray;background-color: darkseagreen;}
     </style>
 </head>
@@ -176,7 +176,7 @@ function changeShape(){
         || twoBulb[cellposition[1][2]][cellposition[0][2]] == 1
         || twoBulb[cellposition[1][3]][cellposition[0][3]] == 1){
         clearInterval(interval);
-        $("#res").text("GAME OVER");
+        setOverLabel();
     }
 }
 //渲染已填充的格子
@@ -227,6 +227,15 @@ function copyArray(array){
         }
     }
     return newArr;
+}
+function setOverLabel(){
+    if(score < 500){
+        $("#res").text("GAME OVER   /_\\   真菜!");
+    }else if(score < 1000){
+        $("#res").text("GAME OVER   >_<   还得加油!");
+    }else{
+        $("#res").text("GAME OVER   -_-   厉害了!");
+    }
 }
 </script>
 </body>

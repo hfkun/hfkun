@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>贪吃蛇</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png">
+    <style type="text/css">
+        #panel{width: 900px; height: 510px; border: 1px solid gray;padding: 1px;position: fixed;left:100px;}
+        #assist{width: 220px; height: 70px; border-left: 1px solid gray;padding: 5px;position: fixed;left:100px;top: 530px;}
+        #scoreSpan{color: brown;}
+        #res{margin-top: 10px; color: chocolate;}
+        .box{width: 30px; height: 30px;border: 1px dotted #F0F0F0;position: absolute;}
+        .box_food{border: 1px solid #e7e7e7;background-color: #c12e2a;}
+        .box_snake{border: 1px solid #e7e7e7;background-color: #c0a16b}
+    </style>
+</head>
+<body>
+<div id="panel"></div>
+<div id="assist">
+    <div>按键说明：上 | 下 | 左 | 右</div>
+    <div>得分：<span id="scoreSpan">0</span></div>
+    <div id="res"></div>
+</div>
+<script src="../../../lib/jquery-1.11.1.min.js"></script>
+<script>
+//所有点（蛇身）
+var snake = [[0,8],[1,8],[2,8],[3,8]]; //点的个数表示蛇的长度 left top
+var step = 30; //每次移动的步长
+var cellwidth = 30; //每一行有几格
+var cellheight = 17; //每一竖有几格
+var score = 0; //得分
+var direct = 'right'; //方向
+var food = [10, 6]; //食物
+var twoBulb = new Array(); //二维灯泡，0 表示还没填格子，1 表示填了格子
+for(var i=0; i<cellheight; i++){
+    twoBulb[i] = new Array();
+    for(var j=0; j<cellwidth; j++){
+        twoBulb[i][j] = 0;
+
+        $("#panel").append($("<div class='box' h='"+i+"' w='"+j+"'></div>").css("left",(j*step)+'px').css("top",(i*step)+'px'));
+    }
+}
+//初始化蛇
+drawTwoBulb();
+var box_food = $("<div class='box box_food'></div>");
+$("#panel").append(box_food);
+drawFood();
+
+var isChageDirect = false; //防止在一次渲染之内更改方向两次导致后退
+$(document).keyup(function (event) {
+    if (event.keyCode == 37 && direct != 'right' && !isChageDirect) { //左
+        direct = 'left';
+        isChageDirect = true;
+    }
+    if (event.keyCode == 39 && direct != 'left' && !isChageDirect) { //右
+        direct = 'right';
+        isChageDirect = true;
+    }
+    if (event.keyCode == 38 && direct != 'down' && !isChageDirect) { //上
+        direct = 'up';
+        isChageDirect = true;
+    }
+    if (event.keyCode == 40 && direct != 'up' && !isChageDirect) { //下
+        direct = 'down';
+        isChageDirect = true;
+    }
+});
+var interval = setInterval(function () {
+    isChageDirect = false;
+    for(var i=0; i<snake.length-1; i++){
+        snake[i][0] = snake[i+1][0];
+        snake[i][1] = snake[i+1][1];
+    }
+    if(direct == 'right'){
+        snake[snake.length-1][0] = snake[snake.length-1][0] + 1;
+    }
+    if(direct == 'left'){
+        snake[snake.length-1][0] = snake[snake.length-1][0] - 1;
+    }
+    if(direct == 'up'){
+        snake[snake.length-1][1] = snake[snake.length-1][1] - 1;
+    }
+    if(direct == 'down'){
+        snake[snake.length-1][1] = snake[snake.length-1][1] + 1;
+    }
+    var isOver = false; //是否超出边界
+    // 到边线了，失败
+    if (snake[snake.length-1][0]<0 || snake[snake.length-1][0] >= cellwidth || snake[snake.length-1][1] < 0 || snake[snake.length-1][1] >= cellheight) {
+        clearInterval(interval);
+        setOverLabel();
+        isOver = true;
+    }
+    // 碰到自己的尾巴了，失败
+    for(var i=0; i<snake.length-1; i++){
+        if(snake[i][0] == snake[snake.length-1][0] && snake[i][1] == snake[snake.length-1][1]){
+            clearInterval(interval);
+            setOverLabel();
+            isOver = true;
+            break;
+        }
+    }
+    if(!isOver){
+        //画蛇
+        drawTwoBulb();
+
+        //判断是否吃到食物
+        if(snake[snake.length-1][0] == food[0] && snake[snake.length-1][1] == food[1]){
+            var newSnakeBox = [[-10, -10]]; //放在头部
+            if(direct == 'right'){
+                newSnakeBox[0][0] = snake[0][0] - 1;
+                newSnakeBox[0][1] = snake[0][1];
+            }
+            if(direct == 'left'){
+                newSnakeBox[0][0] = snake[0][0] + 1;
+                newSnakeBox[0][1] = snake[0][1];
+            }
+            if(direct == 'up'){
+                newSnakeBox[0][0] = snake[0][0];
+                newSnakeBox[0][1] = snake[0][1] + 1;
+            }
+            if(direct == 'down'){
+                newSnakeBox[0][0] = snake[0][0];
+                newSnakeBox[0][1] = snake[0][1] - 1;
+            }
+            setScore();
+            drawFood();
+            snake = newSnakeBox.concat(snake);
+        }
+    }
+}, 300);
+
+//渲染已填充的格子（画蛇）
+function drawTwoBulb(){
+    //所有灯灭
+    for(var i=0; i<cellheight; i++){
+        for(var j=0; j<cellwidth; j++){
+            twoBulb[i][j] = 0;
+        }
+    }
+    //设置亮灯
+    for(var i=0; i<snake.length; i++){
+        twoBulb[snake[i][1]][snake[i][0]] = 1;
+    }
+    //展现
+    for(var i=0; i<cellheight; i++){
+        for(var j=0; j<cellwidth; j++){
+            if(twoBulb[i][j] == 1){
+                $("div[h="+i+"][w="+j+"]").addClass("box_snake");
+            }else{
+                $("div[h="+i+"][w="+j+"]").removeClass("box_snake");
+            }
+        }
+    }
+}
+//生成食物
+function drawFood(){
+    food = [Math.floor(Math.random()*cellwidth), Math.floor(Math.random()*cellheight)];
+    box_food.css("left",(food[0]*step)+'px').css("top",(food[1]*step)+'px');
+}
+// 消除行并得分
+function setScore(){
+    score += 10;
+    $("#scoreSpan").text(score);
+}
+function setOverLabel(){
+    if(score < 500){
+        $("#res").text("GAME OVER   /_\\   真菜!");
+    }else if(score < 1000){
+        $("#res").text("GAME OVER   >_<   还得加油!");
+    }else{
+        $("#res").text("GAME OVER   -_-   厉害了!");
+    }
+}
+</script>
+</body>
+</html>
