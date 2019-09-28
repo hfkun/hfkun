@@ -1,0 +1,81 @@
+﻿<!doctype html>
+<html lang="zh-CN" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="个人网站">
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png">
+    <link rel="stylesheet" href="../../../css/common.css">
+    <title>Hfkun.Media</title>
+
+    <script src="../../../lib/modernizr.js"></script>
+    <!-- 只让 IE 8 以及更低版本的浏览器下载该脚本 -->
+    <!--[if (lt IE 9) & (!IEMobile)]><script src="../../../lib/respond.min.js"></script><![endif]-->
+    <!--IE9以下版本支持HTML5元素-->
+    <!--[if lt IE 9]><script src="../../../lib/html5.js"></script><![endif]-->
+    <!-- 删除苹果默认的工具栏和菜单栏 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- 设置苹果工具栏颜色 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- 忽略页面中的数字识别为电话，忽略email识别 -->
+    <meta name="format-detection" content="telphone=no, email=no">
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <style>
+        div#myplayer { width:1000px;height:500px;margin: 5px auto; padding: 5px;clear:both; }
+        .player_title{text-align: center;padding: 5px;font-size: 30px;margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+
+<div id="myplayer"></div>
+
+<script src="../../../lib/jquery-1.11.1.min.js"></script>
+<script src="ckplayer/ckplayer.js"></script>
+<script>
+    $(function(){
+        //初始化视频列表
+        $.get('json/mp4.json',function(data){
+            $.each(data,function(i,item){
+                $("#myplayer").append($("<div class='videobox"+i+"'></div>")).append("<div class='player_title'>"+item.title+"</div>");
+                var videoObject = {
+                    container: '.videobox'+i,//“#”代表容器的ID，“.”或“”代表容器的class
+                    variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
+                    poster:item.titleimg,
+                    mobileCkControls:true,//是否在移动端（包括ios）环境中显示控制栏
+                    mobileAutoFull:false,//在移动端播放后是否按系统设置的全屏播放
+                    //h5container:'#videoplayer',//h5环境中使用自定义容器
+                    video:item.movieAddr//视频地址
+                };
+                if(i==0){
+                    videoObject.h5container = '#videoplayer';//h5环境中使用自定义容器
+                }
+                var player=new ckplayer(videoObject);
+            });
+        },'json');
+    });
+</script>
+</body>
+</html>
