@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hfkun.拼图</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png">
+    <style type="text/css">
+        #panel{width: 500px; height: 336px; border: 1px solid gray;padding: 1px;position: fixed;left:200px;}
+        #assist{width: 200px; height: 160px; border-left: 1px solid gray;padding: 5px;position: fixed;left:720px;}
+        #res{margin-top: 10px; color: chocolate;}
+        .box{width: 125px; height: 84px;border: 1px dotted #F0F0F0;position: absolute;z-index: 2;}
+    </style>
+</head>
+<body>
+<div id="panel"></div>
+<div id="assist">
+    <img src="images/puzzle/0.jpg" width="125px" height="84px">
+    <div>操作说明：拖拽</div>
+    <div>用时：<span id="hour">00</span>:<span id="minute">00</span>:<span id="second">00</span></div>
+    <div id="res"></div>
+</div>
+<script src="../../../lib/jquery-1.11.1.min.js"></script>
+<script>
+var cellwidth = 125; //小图片宽
+var cellheight = 84; //小图片高
+var direct = 'thorizontal'; //方向
+var vacancy = ['3', '3']; //空缺的坐标, left top
+var imgIndex = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+initImgIndex();
+var iIndex = 0;
+var currentBoxIndex = [50, 50]; //触发点击事件的box 位置，第[0]行，第[1]列
+var timeSecond = 0;
+var intervalTime = setInterval(function(){ //计算时间
+    timeSecond++;
+    var second = timeSecond % 60;
+    var minute = Math.floor(timeSecond / 60);
+    var hour = Math.floor(minute / 60);
+    minute = minute % 60;
+    if(second<10){
+        second = '0'+second;
+    }
+    $("#second").text(second);
+    if(minute<10){
+        minute = '0'+minute;
+    }
+    $("#minute").text(minute);
+    if(hour<10){
+        hour = '0'+hour;
+    }
+    $("#hour").text(hour);
+}, 1000);
+for(var i=0; i<4; i++){
+    for(var j=0; j<4; j++){
+        if(i==3 && j==3){
+            continue;
+        }
+        var box = $("<div class='box' h='"+i+"' w='"+j+"'></div>")
+            .css("background","url('images/puzzle/1_"+(imgIndex[iIndex++])+".jpg'").css("left", (j*cellwidth)+"px").css("top", (i*cellheight)+"px");
+        $("#panel").append(box);
+
+        var canMove = false;
+        var x1,y1; //鼠标距离box 左边和上面的距离
+        var leftOld,topOld; //原来的位置
+        var leftT,topT; //交换位置
+        box.mousedown(function(e){
+            var h = $(this).attr('h');
+            var w = $(this).attr('w');
+            canMove = isSide(h, w); //隔壁，点击拖拽
+            if(canMove){
+                currentBoxIndex = [h, w];
+                leftOld = $(this).attr('w')*cellwidth;
+                topOld = $(this).attr('h')*cellheight;
+                x1 = e.clientX-leftOld-200; //鼠标位置到box 的左边和上边边距
+                y1 = e.clientY-topOld; //
+            }
+        });
+        box.mousemove(function (e) {
+            if(canMove && $(this).attr('h')==currentBoxIndex[0] && $(this).attr('w')==currentBoxIndex[1]){
+                if(direct == 'thorizontal'){ // 水平方向移动
+                    $(this).css('left', (e.clientX-x1-200)+'px');
+                    leftT = $(this).attr('w');
+                    topT = $(this).attr('h');
+
+                    var l = $(this).css('left');
+                    l = l.substring(0, l.length-2);
+                    if(vacancy[0] - leftT > 0){ //只能右移
+                        if(l < leftT*cellwidth){
+                            $(this).css('left', leftT*cellwidth+'px');
+                        }
+                        if(l > (leftT-1+2)*cellwidth){
+                            $(this).css('left', (leftT-1+2)*cellwidth+'px');
+                        }
+                    }else{ //只能左移
+                        if(l < (leftT-1)*cellwidth){
+                            $(this).css('left', (leftT-1)*cellwidth+'px');
+                        }
+                        if(l > (leftT-1+2)*cellwidth){
+                            $(this).css('left', (leftT-1+2)*cellwidth+'px');
+                        }
+                    }
+                }
+                if(direct == 'vertical'){ //垂直方向移动
+                    $(this).css('top', (e.clientY-y1)+'px');
+                    leftT = $(this).attr('w');
+                    topT = $(this).attr('h');
+
+                    var t = $(this).css('top');
+                    t = t.substring(0, t.length-2);
+                    if(vacancy[1] - topT > 0){ //只能下移
+                        if(t < topT*cellheight){
+                            $(this).css('top', topT*cellheight+'px');
+                        }
+                        if(t > (topT-1+2)*cellheight){
+                            $(this).css('top', (topT-1+2)*cellheight+'px');
+                        }
+                    }else{ //只能上移
+                        if(t < (topT-1)*cellheight){
+                            $(this).css('top', (topT-1)*cellheight+'px');
+                        }
+                        if(t > (topT-1+2)*cellheight){
+                            $(this).css('top', (topT-1+2)*cellheight+'px');
+                        }
+                    }
+                }
+            }
+        });
+        box.mouseup(function(e){
+            if(canMove && $(this).attr('h')==currentBoxIndex[0] && $(this).attr('w')==currentBoxIndex[1]){
+                // 判断鼠标是否拖到空白box 上
+                if(e.clientX > vacancy[0]*cellwidth+200 && e.clientY > vacancy[1]*cellheight
+                    && e.clientX < (vacancy[0]-1+2)*cellwidth+200 && e.clientY < (vacancy[1]-1+2)*cellheight){
+                    $(this).attr('h', vacancy[1]).css('left', (vacancy[0]*cellwidth)+'px');
+                    $(this).attr('w', vacancy[0]).css('top', (vacancy[1]*cellheight)+'px');
+                    vacancy = [leftT, topT];
+                    isOver();
+                }else{
+                    $(this).css('left', leftOld+'px');
+                    $(this).css('top', topOld+'px');
+                }
+                // console.info('up', vacancy);
+            }
+            currentBoxIndex = [50, 50];
+            canMove = false;
+        });
+        $("body").mouseup(function(e){
+            canMove = false;
+        });
+    }
+}
+//判断是否结束
+function isOver(){
+    var isOver = true;
+    $(".box").each(function(i, item){
+        var h = parseInt($(item).attr('h'));
+        var w = parseInt($(item).attr('w'));
+        var imgIdx = $(item).css('background').substr(86);
+        imgIdx = parseInt(imgIdx.substring(0, imgIdx.indexOf('.')));
+        if((h*4)+1+w != imgIdx){
+            isOver = false;
+            return ;
+        }
+    });
+    if(isOver){
+        if(timeSecond < 600){
+            $("#res").text("GAME OVER   -_-   厉害了!");
+        }else if(score < 3600){
+            $("#res").text("GAME OVER   >_<   还得加油!");
+        }else{
+            $("#res").text("GAME OVER   /_\\   真菜!");
+        }
+        clearInterval(intervalTime);
+        $(".box").each(function(i, item){
+            $(item).off();
+        });
+    }
+}
+// 判断是否旁边，如果是，可以移动
+function isSide(h, w){ //第h行，第w列
+    // console.info('down',vacancy);
+    if((vacancy[1]==h && Math.abs(vacancy[0]-w)==1)){
+        direct = "thorizontal";
+        return true;
+    }else if(vacancy[0]==w && Math.abs(vacancy[1]-h)==1){
+        direct = "vertical";
+        return true;
+    }else{
+        return false;
+    }
+
+}
+//打乱图片顺序，随机对调10次
+function initImgIndex(){
+    for(var i=0; i<10; i++){
+        var i1 = Math.floor(Math.random()*imgIndex.length);
+        var i2 = Math.floor(Math.random()*imgIndex.length);
+        if(i1 == i2){
+            continue;
+        }
+        imgIndex[i1] = imgIndex[i1] ^ imgIndex[i2];
+        imgIndex[i2] = imgIndex[i1] ^ imgIndex[i2];
+        imgIndex[i1] = imgIndex[i1] ^ imgIndex[i2];
+    }
+}
+</script>
+</body>
+</html>
