@@ -94,8 +94,8 @@ for(var i=0; i<4; i++){
                         if(l < (leftT-1)*cellwidth){
                             $(this).css('left', (leftT-1)*cellwidth+'px');
                         }
-                        if(l > (leftT-1+2)*cellwidth){
-                            $(this).css('left', (leftT-1+2)*cellwidth+'px');
+                        if(l > (leftT-1+1)*cellwidth){
+                            $(this).css('left', (leftT-1+1)*cellwidth+'px');
                         }
                     }
                 }
@@ -117,8 +117,8 @@ for(var i=0; i<4; i++){
                         if(t < (topT-1)*cellheight){
                             $(this).css('top', (topT-1)*cellheight+'px');
                         }
-                        if(t > (topT-1+2)*cellheight){
-                            $(this).css('top', (topT-1+2)*cellheight+'px');
+                        if(t > (topT-1+1)*cellheight){
+                            $(this).css('top', (topT-1+1)*cellheight+'px');
                         }
                     }
                 }
@@ -162,11 +162,11 @@ function isOver(){
     });
     if(isOver){
         if(timeSecond < 600){
-            $("#res").text("GAME OVER   -_-   厉害了!");
-        }else if(score < 3600){
-            $("#res").text("GAME OVER   >_<   还得加油!");
+            $("#res").text("完成   -_-   厉害了!");
+        }else if(timeSecond < 3600){
+            $("#res").text("完成   >_<   还得加油!");
         }else{
-            $("#res").text("GAME OVER   /_\\   真菜!");
+            $("#res").text("完成   /_\\   真菜!");
         }
         clearInterval(intervalTime);
         $(".box").each(function(i, item){
