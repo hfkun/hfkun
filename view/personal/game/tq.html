@@ -139,6 +139,9 @@ function findReboundPoint(){
             while (ballPosition_next[1] > 0 && ballPosition_next[0] > 0) {
                 ballPosition_next[1] = ballPosition_next[1] - 1;
                 ballPosition_next[0] = ballPosition[0] - calcThisSide(ballPosition[1] - ballPosition_next[1], angle);
+                if(ballPosition_next[0]<0){
+                    ballPosition_next[0] = 0;
+                }
                 //判断有没有碰到砖头
                 brick = isTouchLeftUp();
                 if (brick) {
@@ -308,7 +311,7 @@ function moveFacePanel(){
     if(facePanelMoveRight){
         facePanelLeft = cellwidth*boxWidth - 150;
     }
-    facePanel.animate({left: (facePanelLeft)+'px'}, 'normal', function (){moveFacePanel()});
+    facePanel.animate({left: (facePanelLeft)+'px'}, 'normal');
 }
 $(document).keydown(function (event) {
     if (event.keyCode == 37) { //左
