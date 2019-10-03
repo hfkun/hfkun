@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hfkun.弹球</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png">
+    <style type="text/css">
+        #panel{width: 450px; height: 510px; border: 1px solid gray;position: fixed;left:100px;}
+        #assist{width: 200px; height: 120px; border-left: 1px solid gray;padding: 5px;position: fixed;left:560px;}
+        #res{margin-top: 10px; color: chocolate;}
+        .box{width: 30px; height: 30px;position: absolute;}
+        .box_brick{border: 1px solid #F0F0F0;background-color: #9d9d9d;}
+        .box_ball{background-color: #c0a16b;border-radius: 20px;}
+        .face_panel{width: 150px; height: 30px;position: absolute;background-color: #8a6d3b;}
+    </style>
+</head>
+<body>
+<div id="panel"></div>
+<div id="assist">
+    <div>按键说明：左 | 右</div>
+    <div>友情提示：当球落到挡板时，左右移动可以改变球弹起的角度</div>
+    <div id="res"></div>
+</div>
+<script src="../../../lib/jquery-1.11.1.min.js"></script>
+<script>
+var ballPosition = [7, 15]; //球
+var facePanelLeft = 150; //面板 的左边位置 px
+var facePanelWidth = 150; //面板 的宽度
+var boxWidth = 30; //每次移动的步长
+var cellwidth = 15; //每一行有几格
+var cellheight = 17; //每一竖有几格
+var leftCount = 75; //剩下几个格子没被打掉
+var angle = 45; //球弹起时改变的角度，如果右移，则弹起的角度是30°，如果是左移，则弹起的角度是60°
+var directionHorizontal = ['right', 'left']; //水平方向 当前方向取[0]
+var directionVertical = ['up', 'down']; //垂直方向 当前方向取[0]
+var gameOn = true;
+for(var i=0; i<cellheight; i++){
+    for(var j=0; j<cellwidth; j++){
+        if(i<5){
+            $("#panel").append($("<div class='box box_brick' h='"+i+"' w='"+j+"' bulb='1'></div>").css("left",(j*boxWidth)+'px').css("top",(i*boxWidth)+'px'));
+        }else{
+            $("#panel").append($("<div class='box' h='"+i+"' w='"+j+"' bulb='0'></div>").css("left",(j*boxWidth)+'px').css("top",(i*boxWidth)+'px'));
+        }
+    }
+}
+var ball = $("<div class='box box_ball'></div>").css('left', ballPosition[0]*boxWidth+'px').css('top', ballPosition[1]*boxWidth+'px');
+$("#panel").append(ball);
+var facePanel = $("<div class='face_panel'></div>").css('left', facePanelLeft+'px').css('top', (cellheight-1)*boxWidth+'px');
+$("#panel").append(facePanel);
+
+var ballPosition_next; //下一步球将反弹的位置 px
+var toRemoveDiv = null;
+moveBall();
+function moveBall(){
+    angle = 45;
+    // 判断有没有碰到挡板
+    if(ballPosition[1] == cellheight-2){
+        var facePanelLeftPx = facePanel.css('left');
+        facePanelLeftPx = parseInt(facePanelLeftPx.substring(0, facePanelLeftPx.length-2));
+        if((ballPosition[0]*boxWidth+15)<facePanelLeftPx || (ballPosition[0]*boxWidth+15)>(facePanelLeftPx+150)){ //球中间的位置不能小于挡板，所有 +15
+            setOverLabel();
+            gameOn = false;
+            return;
+        }
+        if(facePanelMoveLeft){
+            angle = 60;
+        }
+        if(facePanelMoveRight){
+            angle = 30;
+        }
+    }
+    if(toRemoveDiv){
+        $(toRemoveDiv).attr('bulb', '0').removeClass('box_brick');
+        leftCount--;
+        if(leftCount == 0){
+            setOverLabel();
+            gameOn = false;
+            return;
+        }
+    }
+    var times = findReboundPoint();
+    ball.animate({left: ballPosition_next[0]+'px', top: ballPosition_next[1]+'px'}, times, function(){moveBall()});
+}
+
+var touchLeft = false;
+var touchRight = false;
+var touchUp = false;
+var touchDown = false;
+var touchLeftUp = false;
+var touchLeftDown = false;
+var touchRightUp = false;
+var touchRightDown = false;
+//寻找反弹的点 px
+function findReboundPoint(){
+    touchLeft = false;
+    touchRight = false;
+    touchUp = false;
+    touchDown = false;
+    touchLeftUp = false;
+    touchLeftDown = false;
+    touchRightUp = false;
+    touchRightDown = false;
+    toRemoveDiv = null;
+    ballPosition_next = [ballPosition[0], ballPosition[1]]; //下一次反弹球的位置
+    if(directionHorizontal[0]=='right' && directionVertical[0]=='up'){ //右上移动
+        var brick = isTouchRightUp();
+        if(brick){
+            toRemoveDiv = brick;
+        }else {
+            while (ballPosition_next[0] < cellwidth - 1 && ballPosition_next[1] > 0) {
+                ballPosition_next[0] = ballPosition_next[0] + 1;
+                ballPosition_next[1] = ballPosition[1] - calcOtherSide(ballPosition_next[0] - ballPosition[0], angle);
+                // console.info(ballPosition_next[0], ballPosition_next[1]);
+                //判断有没有碰到砖头
+                brick = isTouchRightUp();
+                if (brick) {
+                    toRemoveDiv = brick;
+                    break;
+                }
+            }
+        }
+        if(touchRight){
+            directionHorizontal = [directionHorizontal[1], directionHorizontal[0]];
+        }else if(touchUp){
+            directionVertical = [directionVertical[1], directionVertical[0]];
+        }else if(touchRightUp){
+            directionVertical = [directionVertical[1], directionVertical[0]];
+            directionHorizontal = [directionHorizontal[1], directionHorizontal[0]];
+        }else if(ballPosition_next[0] == cellwidth-1){//到最右边
+            directionHorizontal = [directionHorizontal[1], directionHorizontal[0]];
+        }else{
+            directionVertical = [directionVertical[1], directionVertical[0]];
+        }
+    }else if(directionHorizontal[0]=='left' && directionVertical[0]=='up'){ //左上移动
+        var brick = isTouchLeftUp();
+        if(brick){
+            toRemoveDiv = brick;
+        }else {
+            while (ballPosition_next[1] > 0 && ballPosition_next[0] > 0) {
+                ballPosition_next[1] = ballPosition_next[1] - 1;
+                ballPosition_next[0] = ballPosition[0] - calcThisSide(ballPosition[1] - ballPosition_next[1], angle);
+                //判断有没有碰到砖头
+                brick = isTouchLeftUp();
+                if (brick) {
+                    toRemoveDiv = brick;
+                    break;
+                }
+            }
+        }
+        if(touchLeft){
+            directionHorizontal = [directionHorizontal[1], directionHorizontal[0]];
+        }else if(touchUp){
+            directionVertical = [directionVertical[1], directionVertical[0]];
+        }else if(touchLeftUp){
+            directionVertical = [directionVertical[1], directionVertical[0]];
+            directionHorizontal = [directionHorizontal[1], directionHorizontal[0]];
+        }else if(ballPosition_next[1] == 0){//到最上边
+            directionVertical = [directionVertical[1], directionVertical[0]];
+        }else{
+            directionHorizontal = [directionHorizontal[1], directionHorizontal[0]];
+        }
+    }else if(directionHorizontal[0]=='left' && directionVertical[0]=='down'){ //左下移动
+        var brick = isTouchLeftDown();
+        if(brick){
+            toRemoveDiv = brick;
+        }else{
+            while(ballPosition_next[0] > 0 && ballPosition_next[1] < cellheight-2){
+                ballPosition_next[0] = ballPosition_next[0] - 1;
+                ballPosition_next[1] = ballPosition[1] + calcOtherSide(ballPosition[0] - ballPosition_next[0], angle);
+                // console.info(ballPosition_next[0], ballPosition_next[1]);
+                brick = isTouchLeftDown();
+                if(brick){
+                    toRemoveDiv = brick;
+                    break;
+                }
+            }
+        }
+        if(touchLeft){
+            directionHorizontal = [directionHorizontal[1], directionHorizontal[0]];
+        }else if(touchDown){
+            directionVertical = [directionVertical[1], directionVertical[0]];
+        }else if(touchLeftDown){
+            directionVertical = [directionVertical[1], directionVertical[0]];
+            directionHorizontal = [directionHorizontal[1], directionHorizontal[0]];
+        }else if(ballPosition_next[0] == 0){//到最左边
+            directionHorizontal = [directionHorizontal[1], directionHorizontal[0]];
+        }else{
+            directionVertical = [directionVertical[1], directionVertical[0]];
+        }
+    }else if(directionHorizontal[0]=='right' && directionVertical[0]=='down'){ //右下移动
+        var brick = isTouchRightDown();
+        if(brick){
+            toRemoveDiv = brick;
+        }else{
+            while(ballPosition_next[1] < cellheight-2 && ballPosition_next[0] < cellwidth-1){
+                ballPosition_next[1] = ballPosition_next[1] + 1;
+                ballPosition_next[0] = ballPosition[0] + calcOtherSide(ballPosition_next[1] - ballPosition[1], angle);
+                // console.info(ballPosition_next[0], ballPosition_next[1]);
+                brick = isTouchRightDown();
+                if(brick){
+                    toRemoveDiv = brick;
+                    break;
+                }
+            }
+        }
+        if(touchRight){
+            directionHorizontal = [directionHorizontal[1], directionHorizontal[0]];
+        }else if(touchDown){
+            directionVertical = [directionVertical[1], directionVertical[0]];
+        }else if(touchRightDown){
+            directionVertical = [directionVertical[1], directionVertical[0]];
+            directionHorizontal = [directionHorizontal[1], directionHorizontal[0]];
+        }else if(ballPosition_next[1] == cellheight-2){//到最下边
+            directionVertical = [directionVertical[1], directionVertical[0]];
+        }else{
+            directionHorizontal = [directionHorizontal[1], directionHorizontal[0]];
+        }
+    }
+    //根据两点算出距离，再根据距离算出球经过的所需时间，这个计算主要是为了不同路程的速度一致
+    var distance = Math.sqrt(Math.pow(ballPosition_next[0]-ballPosition[0], 2) + Math.pow(ballPosition_next[1]-ballPosition[1], 2));
+    var times = Math.round(distance/10*1000);
+
+    ballPosition = [ballPosition_next[0], ballPosition_next[1]];
+    // console.info('ballPosition',ballPosition);
+    // console.info('ballPosition_next',ballPosition_next);
+    ballPosition_next = [ballPosition_next[0]*boxWidth, ballPosition_next[1]*boxWidth];
+    return times;
+}
+function isTouchRightUp(){
+    var brick = $("div[h='"+(ballPosition_next[1]-1)+"'][w='"+ballPosition_next[0]+"'][bulb='1']"); //上一个
+    if(brick && brick.length>0){
+        touchUp = true;
+        return brick[0];
+    }
+    brick = $("div[h='"+ballPosition_next[1]+"'][w='"+(ballPosition_next[0]+1)+"'][bulb='1']"); //右一个
+    if(brick && brick.length>0){
+        touchRight = true;
+        return brick[0];
+    }
+    brick = $("div[h='"+(ballPosition_next[1]-1)+"'][w='"+(ballPosition_next[0]+1)+"'][bulb='1']"); //右上一个
+    if(brick && brick.length>0){
+        touchRightUp = true;
+        return brick[0];
+    }
+    return null;
+}
+function isTouchLeftUp(){
+    var brick = $("div[h='"+(ballPosition_next[1]-1)+"'][w='"+ballPosition_next[0]+"'][bulb='1']"); //上一个
+    if(brick && brick.length>0){
+        touchUp = true;
+        return brick[0];
+    }
+    brick = $("div[h='"+ballPosition_next[1]+"'][w='"+(ballPosition_next[0]-1)+"'][bulb='1']"); //左一个
+    if(brick && brick.length>0){
+        touchLeft = true;
+        return brick[0];
+    }
+    brick = $("div[h='"+(ballPosition_next[1]-1)+"'][w='"+(ballPosition_next[0]-1)+"'][bulb='1']"); //左上一个
+    if(brick && brick.length>0){
+        touchLeftUp = true;
+        return brick[0];
+    }
+    return null;
+}
+function isTouchLeftDown(){
+    var brick = $("div[h='"+(ballPosition_next[1]+1)+"'][w='"+ballPosition_next[0]+"'][bulb='1']"); //下一个
+    if(brick && brick.length>0){
+        touchDown = true;
+        return brick[0];
+    }
+    brick = $("div[h='"+ballPosition_next[1]+"'][w='"+(ballPosition_next[0]-1)+"'][bulb='1']"); //左一个
+    if(brick && brick.length>0){
+        touchLeft = true;
+        return brick[0];
+    }
+    brick = $("div[h='"+(ballPosition_next[1]+1)+"'][w='"+(ballPosition_next[0]-1)+"'][bulb='1']"); //左下一个
+    if(brick && brick.length>0){
+        touchLeftDown = true;
+        return brick[0];
+    }
+    return null;
+}
+function isTouchRightDown(){
+    var brick = $("div[h='"+(ballPosition_next[1]+1)+"'][w='"+ballPosition_next[0]+"'][bulb='1']"); //下一个
+    if(brick && brick.length>0){
+        touchDown = true;
+        return brick[0];
+    }
+    brick = $("div[h='"+ballPosition_next[1]+"'][w='"+(ballPosition_next[0]+1)+"'][bulb='1']"); //右一个
+    if(brick && brick.length>0){
+        touchRight = true;
+        return brick[0];
+    }
+    brick = $("div[h='"+(ballPosition_next[1]+1)+"'][w='"+(ballPosition_next[0]+1)+"'][bulb='1']"); //右下一个
+    if(brick && brick.length>0){
+        touchRightDown = true;
+        return brick[0];
+    }
+    return null;
+}
+// facePanel
+var facePanelMoveLeft = false;
+var facePanelMoveRight = false;
+function moveFacePanel(){
+    if(facePanelMoveLeft){
+        facePanelLeft = 0;
+    }
+    if(facePanelMoveRight){
+        facePanelLeft = cellwidth*boxWidth - 150;
+    }
+    facePanel.animate({left: (facePanelLeft)+'px'}, 'normal', function (){moveFacePanel()});
+}
+$(document).keydown(function (event) {
+    if (event.keyCode == 37) { //左
+        if(gameOn && !facePanelMoveLeft && !facePanelMoveRight){
+            facePanelMoveLeft = true;
+            moveFacePanel();
+        }
+        facePanelMoveRight = false;
+    }
+    if (event.keyCode == 39) { //右
+        if(gameOn && !facePanelMoveLeft && !facePanelMoveRight){
+            facePanelMoveRight = true;
+            moveFacePanel();
+        }
+        facePanelMoveLeft = false;
+    }
+});
+$(document).keyup(function (event) {
+    if (event.keyCode == 37) { //左
+        facePanelMoveLeft = false;
+        facePanelMoveRight = false;
+        facePanel.stop();
+    }
+    if (event.keyCode == 39) { //右
+        facePanelMoveLeft = false;
+        facePanelMoveRight = false;
+        facePanel.stop();
+    }
+});
+//根据直角的一边和入射角，计算出角所对的边的长度
+function calcOtherSide(length, single){
+    return Math.round(length * Math.tan(single*Math.PI/180));
+}
+//根据直角的一边和入射角，计算出角边的长度
+function calcThisSide(length, single){
+    return Math.round(length / Math.tan(single*Math.PI/180));
+}
+function setOverLabel(){
+    if(leftCount>0){
+        $("#res").text("GAME OVER   -_-   真菜!");
+    }else{
+        $("#res").text("真棒!");
+    }
+}
+</script>
+</body>
+</html>
