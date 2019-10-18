@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hfkun.电蚊子</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png">
+    <style type="text/css">
+        #panel{width: 450px; height: 510px; border: 1px solid gray;position: fixed;left:100px;}
+        #artillery{width: 60px; height: 60px; top: 458px;left:295px;position: absolute;background: url("images/dwz/artillery.png") no-repeat;}
+        #light{width: 1px; height: 450px; top: 10px;position: absolute;background-color: green;display: none;}
+        #assist{width: 200px; height: 100px; border-left: 1px solid gray;padding: 5px;position: fixed;left:560px;}
+        #scoreSpan{color: brown;}
+        #res{margin-top: 10px; color: chocolate;}
+        .mosquito{width: 30px; height: 30px;position: absolute;}
+        .mosquito-bg{background: url("images/dwz/mosquito.png") no-repeat;}
+        .mosquito-bowb{background: url("images/dwz/bowb.png") no-repeat;}
+    </style>
+</head>
+<body>
+<div id="panel"></div>
+<div id="artillery"></div>
+<div id="light"></div>
+<div id="assist">
+    <div>按键说明：左 | 右 | 上</div>
+    <div>时间：<span id="hour">00</span>:<span id="minute">01</span>:<span id="second">00</span></div>
+    <div>得分：<span id="scoreSpan">0</span></div>
+    <div id="res"></div>
+</div>
+<script src="../../../lib/jquery-1.11.1.min.js"></script>
+<script>
+var boxWidth = 30; //每次移动的步长
+var cellwidth = 15; //每一行有几格
+var cellheight = 17; //每一竖有几格
+var score = 0; //得分
+var gameOn = true;
+
+var artilleryLeft = 295; //大炮的左边位置 px
+var artillery = $("#artillery");
+var light = $("#light");
+
+var timeSecond = 60;
+var intervalTime = setInterval(function(){ //计算时间
+    timeSecond--;
+    var second = timeSecond % 60;
+    var minute = Math.floor(timeSecond / 60);
+    var hour = Math.floor(minute / 60);
+    minute = minute % 60;
+    if(second<10){
+        second = '0'+second;
+    }
+    $("#second").text(second);
+    if(minute<10){
+        minute = '0'+minute;
+    }
+    $("#minute").text(minute);
+    if(hour<10){
+        hour = '0'+hour;
+    }
+    $("#hour").text(hour);
+    if(timeSecond == 0){
+        gameOn = false;
+        setOverLabel();
+        clearInterval(intervalTime);
+        clearInterval(mosquiteInteval0);
+        clearInterval(mosquiteInteval1);
+        clearInterval(mosquiteInteval2);
+    }
+}, 1000);
+
+//产生蚊子
+var mosquitoPostion = [[0,0],[0,0],[0,0]]; //蚊子坐标
+for(var i=0; i<mosquitoPostion.length; i++){
+    $("#panel").append($("<div class='mosquito mosquito-bg' h='"+i+"'></div>").css("left",(mosquitoPostion[i][0]*boxWidth)+'px').css("top",(mosquitoPostion[i][1]*boxWidth)+'px').css('display','none'));
+}
+genMosquito();
+//产生蚊子的坐标
+function genMosquitoPosition(changeIndex){
+    // for(var i=0; i<mosquitoPostion.length; i++){
+        var l = Math.floor(Math.random()*(cellwidth-2))+1;
+        var t = Math.floor(Math.random()*10);
+        while(isContains(l, t)){
+            l = Math.floor(Math.random()*(cellwidth-2))+1;
+            t = Math.floor(Math.random()*10);
+        }
+        mosquitoPostion[changeIndex][0] = l;
+        mosquitoPostion[changeIndex][1] = t;
+    // }
+}
+function isContains(l, t){
+    var isContains = false;
+    for(var i=0; i<mosquitoPostion.length; i++){
+        if(mosquitoPostion[i][0] == l && mosquitoPostion[i][1] == t){
+            isContains = true;
+            break;
+        }
+    }
+    return isContains;
+}
+//变化蚊子的位置
+var mosquiteInteval0;
+var mosquiteInteval1;
+var mosquiteInteval2;
+function genMosquito(){
+    mosquiteInteval0 = setInterval(function(){
+        genMosquitoPosition(0);
+        $(".mosquito").eq(0).removeClass("mosquito-bowb").addClass("mosquito-bg").css("left",(mosquitoPostion[0][0]*boxWidth)+'px').css("top",(mosquitoPostion[0][1]*boxWidth)+'px').show();
+        setTimeout(function(){
+            $(".mosquito").eq(0).fadeOut('normal');
+        }, 1500)
+    },1000);
+
+    mosquiteInteval1 = setInterval(function(){
+        genMosquitoPosition(1);
+        $(".mosquito").eq(1).removeClass("mosquito-bowb").addClass("mosquito-bg").css("left",(mosquitoPostion[1][0]*boxWidth)+'px').css("top",(mosquitoPostion[1][1]*boxWidth)+'px').show();
+        setTimeout(function(){
+            $(".mosquito").eq(1).fadeOut('normal');
+        }, 1500)
+    },2000);
+
+    mosquiteInteval2 = setInterval(function(){
+        genMosquitoPosition(2);
+        $(".mosquito").eq(2).removeClass("mosquito-bowb").addClass("mosquito-bg").css("left",(mosquitoPostion[2][0]*boxWidth)+'px').css("top",(mosquitoPostion[2][1]*boxWidth)+'px').show();
+        setTimeout(function(){
+            $(".mosquito").eq(2).fadeOut('normal');
+        }, 1500)
+    },2500);
+}
+
+//判断是否打中蚊子
+function isTouchMosquito(){
+    if(!gameOn){
+        return ;
+    }
+    var al = artillery.css('left');
+    al = al.substring(0, al.length-2);
+    $(".mosquito").each(function(i){
+        if($(this).hasClass("mosquito-bowb")){ //避免重复计算
+            return ;
+        }
+        var l = $(this).css('left');
+        l = l.substring(0, l.length-2);
+        if(al-100-l < 0 && al-100-l > -30){
+            $(this).removeClass("mosquito-bg").addClass("mosquito-bowb");
+            score++;
+            $("#scoreSpan").text(score);
+        }
+    });
+}
+// artillery
+var artilleryMoveLeft = false;
+var artilleryMoveRight = false;
+function moveArtillery(){
+    if(artilleryMoveLeft){
+        artilleryLeft = 101;
+    }
+    if(artilleryMoveRight){
+        artilleryLeft = cellwidth*boxWidth - 60+100;
+    }
+    artillery.animate({left: (artilleryLeft)+'px'}, 'normal');
+}
+$(document).keydown(function (event) {
+    if (event.keyCode == 37) { //左
+        if(gameOn && !artilleryMoveLeft && !artilleryMoveRight){
+            artilleryMoveLeft = true;
+            moveArtillery();
+        }
+        artilleryMoveRight = false;
+    }
+    if (event.keyCode == 39) { //右
+        if(gameOn && !artilleryMoveLeft && !artilleryMoveRight){
+            artilleryMoveRight = true;
+            moveArtillery();
+        }
+        artilleryMoveLeft = false;
+    }
+    if (event.keyCode == 38) { //上
+        var aLeft = artillery.css('left');
+        aLeft = aLeft.substring(0, aLeft.length-2);
+        light.css('left',(aLeft-1+31)+'px').show();
+    }
+});
+$(document).keyup(function (event) {
+    if (event.keyCode == 37) { //左
+        artilleryMoveLeft = false;
+        artilleryMoveRight = false;
+        artillery.stop();
+    }
+    if (event.keyCode == 39) { //右
+        artilleryMoveLeft = false;
+        artilleryMoveRight = false;
+        artillery.stop();
+    }
+    if (event.keyCode == 38) { //上
+        isTouchMosquito();
+        light.fadeOut('fast');
+    }
+});
+function setOverLabel(){
+    if(score < 20){
+        $("#res").text("GAME OVER   /_\\   真菜!");
+    }else if(score < 30){
+        $("#res").text("GAME OVER   >_<   还得加油!");
+    }else{
+        $("#res").text("GAME OVER   -_-   厉害了!");
+    }
+}
+</script>
+</body>
+</html>
