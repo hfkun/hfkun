@@ -1,9 +1,8 @@
 [
   {"itemsrc":"view/personal/home.html","title":"我的主页","icon":"glyphicon glyphicon-home"},
-  {"itemsrc":"","title":"练习小项目","icon":"glyphicon glyphicon-briefcase","children":[
-    {"itemsrc":"","title":"gitoa"},
-    {"itemsrc":"","title":"gitssh"},
-    {"itemsrc":"","title":"gitspringboot"}
+  {"itemsrc":"view/projects/project.html","title":"自研小项目","icon":"glyphicon glyphicon-briefcase","children":[
+    {"itemsrc":"https://github.com/hfkun/dtx-spring-boot-starter","title":"dtx-spring-boot-starter"},
+    {"itemsrc":"https://github.com/hfkun/netty-mvc","title":"netty-mvc"}
   ]},
   {"itemsrc":"view/learn/learn.html","title":"学习笔记（浏览全部）","icon":"glyphicon glyphicon-book","children":[
     {"itemsrc":"","title":"HTML/CSS","children":[

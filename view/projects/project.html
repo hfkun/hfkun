@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="个人网站">
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/blog.css">
+
+    <title>Hfkun.Project</title>
+
+    <script src="../../lib/modernizr.js"></script>
+    <!-- 只让 IE 8 以及更低版本的浏览器下载该脚本 -->
+    <!--[if (lt IE 9) & (!IEMobile)]><script src="../../lib/respond.min.js"></script><![endif]-->
+    <!--IE9以下版本支持HTML5元素-->
+    <!--[if lt IE 9]><script src="../../lib/html5.js"></script><![endif]-->
+    <!-- 删除苹果默认的工具栏和菜单栏 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- 设置苹果工具栏颜色 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- 忽略页面中的数字识别为电话，忽略email识别 -->
+    <meta name="format-detection" content="telphone=no, email=no">
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <style>
+        body{background-color: #E3E3E3;}
+        #container-main{padding-bottom: 150px;}
+        .center-axis{border-left: 1px solid #adadad;width: 2px;margin: auto;height: 240px;position: relative;}
+        .center-axis .pointer{position: absolute;top: 102px;left: -12px;padding: 5px;background-color: #c12e2a;border-radius: 20px;border: 6px solid darkgreen;}
+        .center-axis .time{position: absolute;top: 134px;left: -22px;}
+        .center-axis .popover-box{width: 400px;max-width: 400px;height: 172px;display: block; top: 26px;}
+        .center-axis .popover-left{left: 20px;}
+        .center-axis .popover-right{left:-422px;}
+    </style>
+</head>
+<body>
+<div id="container-main" class="container">
+</div>
+
+<script src="../../lib/jquery-1.11.1.min.js"></script>
+<script>
+    function initProject(container, projects){
+        var right_popover = "popover right fade popover-box popover-left";
+        var left_popover = "popover left fade popover-box popover-right";
+        var in_popover = "in";
+        var out_popover = "out";
+        for(var i=0; i<projects.length; i++){
+            $("<div>").attr("class", "center-axis")
+                .append($("<div>").attr("class","pointer"))
+                .append($("<div>").attr("class","time").html(projects[i].time))
+                .append($("<div>").attr("class",(i%2==0?right_popover:left_popover) +' '+(i>2?out_popover:in_popover))
+                    .append($("<div>").attr("class","arrow").attr("style","top: 50%;"))
+                    .append($("<h3>").attr("class","popover-title").html(projects[i].title))
+                    .append($("<div>").attr("class","popover-content").html(projects[i].abstract)))
+                .appendTo(container);
+        }
+    }
+    var popovers = [];
+    $(function(){
+        $.get("../../data/myproject.json",function(data){
+            initProject($("#container-main"), data);
+            popovers = $(".popover");
+        },"json");
+
+        $(window).scroll(function () {
+            var stop = $(window).scrollTop();
+            if(stop < 120){
+                return ;
+            }
+            var size = (stop-120)/240;
+            for(var i=0; i<popovers.length; i++){
+                if(i>=(size+2)){
+                    break;
+                }
+                $(popovers[i]).animate({opacity:1}, 'slow')
+            }
+        });
+    });
+</script>
+</body>
+</html>
