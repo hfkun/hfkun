@@ -48,25 +48,33 @@
     <style>
         body{background-color: #1D1D1D;}
         .img{width: 100px;height: 440px;position: absolute;top: 50px;}
-        .img1{left: 80px;width: 800px;background: url("../../../img/res/home/1.jpg")}
-        .img2{left: 880px;background: url("../../../img/res/home/2.jpg")}
-        .img3{left: 980px;background: url("../../../img/res/home/3.jpg")}
-        .img4{left: 1080px;background: url("../../../img/res/home/4.jpg")}
-        .img5{left: 1180px;background: url("../../../img/res/home/5.jpg")}
+        .img1{width: 800px;background: url("../../../img/res/home/1.jpg")}
+        .img2{background: url("../../../img/res/home/2.jpg")}
+        .img3{background: url("../../../img/res/home/3.jpg")}
+        .img4{background: url("../../../img/res/home/4.jpg")}
+        .img5{background: url("../../../img/res/home/5.jpg")}
     </style>
 </head>
 <body>
-    <div class="img img1" key="1"></div>
+    <div class="img img1" key="1" style=""></div>
     <div class="img img2" key="2"></div>
     <div class="img img3" key="3"></div>
     <div class="img img4" key="4"></div>
     <div class="img img5" key="5"></div>
 
+<script src="../../../js/util.js"></script>
 <script src="../../../lib/jquery-1.11.1.min.js"></script>
 <script>
 var activeKey = 1;
 var isOutoShow = true;
 var imgDivs = $(".img");
+var paddingWidth = HFK.Util.getPageWidth(window);
+paddingWidth = paddingWidth>1200?((paddingWidth-1200)/2):0;
+for(var i=0; i<imgDivs.length; i++){
+    var that = $(imgDivs[i]);
+    if(i == 0){that.attr("style", "left: "+paddingWidth+"px;");}
+    else{that.attr("style", "left: "+(800+(i-1)*100+paddingWidth)+"px;");}
+}
 function open(key){
     for(var i=0; i<imgDivs.length; i++){
         var that = $(imgDivs[i]);
@@ -75,17 +83,17 @@ function open(key){
         if(tempKey < key){
             that.animate({
                 width:'100px',
-                left: ((tempKey-1)*100+80)+'px'
+                left: ((tempKey-1)*100+paddingWidth)+'px'
             },2000);
         }else if(tempKey > key){
             that.animate({
                 width:'100px',
-                left: ((tempKey-2)*100+800+80)+'px'
+                left: ((tempKey-2)*100+800+paddingWidth)+'px'
             },2000);
         }else{ // ==
             that.animate({
                 width: '800px',
-                left: ((tempKey-1)*100+80)+'px'
+                left: ((tempKey-1)*100+paddingWidth)+'px'
             },2000);
         }
     }
