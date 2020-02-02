@@ -50,24 +50,37 @@
         body{background-color: #E3E3E3;}
         #container-main{padding-bottom: 150px;}
         .center-axis{border-left: 1px solid #adadad;width: 2px;margin: auto;height: 240px;position: relative;}
-        .center-axis .pointer{position: absolute;top: 102px;left: -12px;padding: 5px;background-color: #c12e2a;border-radius: 20px;border: 6px solid darkgreen;}
-        .center-axis .time{position: absolute;top: 134px;left: -22px;}
-        .center-axis .popover-box{width: 400px;max-width: 400px;height: 172px;display: block; top: 26px;}
-        .center-axis .popover-left{left: 20px;}
-        .center-axis .popover-right{left:-422px;}
+        .pointer{position: absolute;top: 102px;left: -12px;padding: 5px;background-color: #c12e2a;border-radius: 20px;border: 6px solid darkgreen;}
+        .time{position: absolute;top: 134px;left: -22px;}
+        .popover-box{width: 400px;max-width: 400px;height: 172px;display: block; top: 26px;}
+        .popover-left{left: 20px;}
+        .popover-right{left:-422px;}
+
+        #container-phone{padding-bottom: 150px;}
+        .center-axis-phone{border-left: 1px solid #adadad;width: 2px;height: 240px;position: relative;}
     </style>
 </head>
 <body>
 <div id="container-main" class="container">
 </div>
+<div id="container-phone" class="container">
+</div>
 
 <script src="../../lib/jquery-1.11.1.min.js"></script>
+<script src="../../js/util.js"></script>
 <script>
+    var pageWidth = HFK.Util.getPageWidth(window);
+    // console.log(pageWidth);
+    var centerAxisPhoneMarginLeft = 10;
+    if(pageWidth > 460){
+        centerAxisPhoneMarginLeft = (pageWidth-460)/2;
+    }
+
+    var right_popover = "popover right fade popover-box popover-left";
+    var left_popover = "popover left fade popover-box popover-right";
+    var in_popover = "in";
+    var out_popover = "out";
     function initProject(container, projects){
-        var right_popover = "popover right fade popover-box popover-left";
-        var left_popover = "popover left fade popover-box popover-right";
-        var in_popover = "in";
-        var out_popover = "out";
         for(var i=0; i<projects.length; i++){
             $("<div>").attr("class", "center-axis")
                 .append($("<div>").attr("class","pointer"))
@@ -79,19 +92,41 @@
                 .appendTo(container);
         }
     }
+    function initProjectPhone(container, projects){
+        for(var i=0; i<projects.length; i++){
+            $("<div>").attr("class", "center-axis-phone").attr("style", "margin-left: "+centerAxisPhoneMarginLeft+"px;")
+                .append($("<div>").attr("class","pointer"))
+                .append($("<div>").attr("class","time").html(projects[i].time))
+                .append($("<div>").attr("class",right_popover +' '+(i>2?out_popover:in_popover))
+                    .append($("<div>").attr("class","arrow").attr("style","top: 50%;"))
+                    .append($("<h3>").attr("class","popover-title").html(projects[i].title))
+                    .append($("<div>").attr("class","popover-content").html(projects[i].abstract)))
+                .appendTo(container);
+        }
+    }
     var popovers = [];
     $(function(){
         $.get("../../data/myproject.json",function(data){
-            initProject($("#container-main"), data);
+            if(pageWidth > 900){
+                $("#container-phone").hide();
+                initProject($("#container-main"), data);
+            }else{
+                $("#container-main").hide();
+                initProjectPhone($("#container-phone"), data);
+            }
             popovers = $(".popover");
         },"json");
 
         $(window).scroll(function () {
             var stop = $(window).scrollTop();
-            if(stop < 120){
+            if(stop < 200){
                 return ;
             }
-            var size = (stop-120)/240;
+            var size = (stop-200)/240;
+            if(pageWidth < 460){
+                size = stop/220;
+            }
+            // console.log(size) // 0 - 8
             for(var i=0; i<popovers.length; i++){
                 if(i>=(size+2)){
                     break;

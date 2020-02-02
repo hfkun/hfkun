@@ -47,20 +47,15 @@
 	<meta name="msapplication-tap-highlight" content="no">
     <style>
         body{background-color: #1D1D1D;}
-        .img{width: 100px;height: 440px;position: absolute;top: 50px;}
-        .img1{width: 800px;background: url("../../../img/res/home/1.jpg")}
-        .img2{background: url("../../../img/res/home/2.jpg")}
-        .img3{background: url("../../../img/res/home/3.jpg")}
-        .img4{background: url("../../../img/res/home/4.jpg")}
-        .img5{background: url("../../../img/res/home/5.jpg")}
+        .img{position: absolute;overflow: hidden;}
     </style>
 </head>
 <body>
-    <div class="img img1" key="1" style=""></div>
-    <div class="img img2" key="2"></div>
-    <div class="img img3" key="3"></div>
-    <div class="img img4" key="4"></div>
-    <div class="img img5" key="5"></div>
+    <div class="img" key="1"><img src="../../../img/res/home/1.jpg"></img></div>
+    <div class="img" key="2"><img src="../../../img/res/home/2.jpg"></img></div>
+    <div class="img" key="3"><img src="../../../img/res/home/3.jpg"></img></div>
+    <div class="img" key="4"><img src="../../../img/res/home/4.jpg"></img></div>
+    <div class="img" key="5"><img src="../../../img/res/home/5.jpg"></img></div>
 
 <script src="../../../js/util.js"></script>
 <script src="../../../lib/jquery-1.11.1.min.js"></script>
@@ -68,13 +63,40 @@
 var activeKey = 1;
 var isOutoShow = true;
 var imgDivs = $(".img");
-var paddingWidth = HFK.Util.getPageWidth(window);
-paddingWidth = paddingWidth>1200?((paddingWidth-1200)/2):0;
+var pageWidth = HFK.Util.getPageWidth(window);
+var pageHeigth = HFK.Util.getPageHeight(window);
+
+var imgWidth;
+var imgSideWidth;
+var imgHeight;
+var paddingWidth;
+if(pageWidth > 1200){
+    imgWidth = 800;
+    imgSideWidth = 100;
+    imgHeight = 440;
+    paddingWidth = (pageWidth-1200)/2;
+}else if (pageWidth > 1000){
+    imgWidth = 800;
+    imgSideWidth = 50;
+    imgHeight = 440;
+    paddingWidth = (pageWidth-1000)/2;
+}else{
+    imgWidth = pageWidth-200;
+    imgSideWidth = 50;
+    imgHeight = 440*imgWidth/800;
+    paddingWidth = 0;
+}
+imgHeight = pageHeigth>imgHeight?imgHeight:pageHeigth;
+var imgMarginTop = (pageHeigth-imgHeight) > 50?50:0;
+
+// console.log("pageWidth: "+pageWidth +", imgWidth: "+imgWidth+", imgSideWidth: "+imgSideWidth +", imgHeight:"+imgHeight +", paddingWidth:"+paddingWidth +", pageHeigth:"+pageHeigth);
+
 for(var i=0; i<imgDivs.length; i++){
     var that = $(imgDivs[i]);
-    if(i == 0){that.attr("style", "left: "+paddingWidth+"px;");}
-    else{that.attr("style", "left: "+(800+(i-1)*100+paddingWidth)+"px;");}
+    if(i == 0){that.attr("style", "left: "+paddingWidth+"px;width: "+imgWidth+"px;height: "+imgHeight+"px;top: "+imgMarginTop+"px;");}
+    else{that.attr("style", "left: "+(imgWidth+(i-1)*imgSideWidth+paddingWidth)+"px;width: "+imgSideWidth+"px;height: "+imgHeight+"px;top: "+imgMarginTop+"px;");}
 }
+imgDivs.find("img").attr("style", "width:"+imgWidth+"px;height:"+imgHeight+"px;");
 function open(key){
     for(var i=0; i<imgDivs.length; i++){
         var that = $(imgDivs[i]);
@@ -82,18 +104,18 @@ function open(key){
         var tempKey = that.attr('key');
         if(tempKey < key){
             that.animate({
-                width:'100px',
-                left: ((tempKey-1)*100+paddingWidth)+'px'
+                width: imgSideWidth+'px',
+                left: ((tempKey-1)*imgSideWidth+paddingWidth)+'px'
             },2000);
         }else if(tempKey > key){
             that.animate({
-                width:'100px',
-                left: ((tempKey-2)*100+800+paddingWidth)+'px'
+                width: imgSideWidth+'px',
+                left: ((tempKey-2)*imgSideWidth+imgWidth+paddingWidth)+'px'
             },2000);
         }else{ // ==
             that.animate({
-                width: '800px',
-                left: ((tempKey-1)*100+paddingWidth)+'px'
+                width: imgWidth+'px',
+                left: ((tempKey-1)*imgSideWidth+paddingWidth)+'px'
             },2000);
         }
     }

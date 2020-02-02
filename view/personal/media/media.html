@@ -44,7 +44,7 @@
     <!-- windows phone 点击无高光 -->
     <meta name="msapplication-tap-highlight" content="no">
     <style>
-        div#myplayer { width:1000px;height:500px;margin: 5px auto; padding: 5px;clear:both; }
+        div#myplayer { margin: 5px auto; padding: 5px;clear:both; }
         .player_title{text-align: center;padding: 5px;font-size: 30px;margin-bottom: 20px;}
     </style>
 </head>
@@ -53,9 +53,14 @@
 <div id="myplayer"></div>
 
 <script src="../../../lib/jquery-1.11.1.min.js"></script>
+<script src="../../../js/util.js"></script>
 <script src="ckplayer/ckplayer.js"></script>
 <script>
     $(function(){
+        //设置宽度
+        var widowWidth = HFK.Util.getPageWidth(window);
+        $("#myplayer").attr("style", "width:"+(widowWidth>1000?1000:(widowWidth-10))+"px");
+
         //初始化视频列表
         $.get('json/mp4.json',function(data){
             $.each(data,function(i,item){
