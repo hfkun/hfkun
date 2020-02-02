@@ -7,5 +7,5 @@
   {"title":"新华能源", "time":"16.04", "abstract":"上海石油交易中心最新数据的导入和展示，第一次尝试前后端分离，前端只用html页面，通过rest方式访问后台<br/>页面有点繁琐，悄悄的用了react，感觉提升了一个档次<br/><a href=\"javascript:;\" class=\"btn btn-link\">查看源码</a>"},
   {"title":"驻京办OA系统", "time":"16.11", "abstract":"基于activiti开发的办公系统。第一次接触需要走流程的项目，学习流程框架 activiti。每次数据映射特别繁琐，想找个偷懒的方式，于是接触了spring-data，还别说，真的很方便，不过处理实体之间的关系特别麻烦<br/><a href=\"javascript:;\" class=\"btn btn-link\">查看源码</a>"},
   {"title":"基于HTTP的分布式框架", "time":"19.11", "abstract":"依赖于springboot，mybatis-plus<br/>使用简单的，几乎没有代码侵入的分布式框架<br/>使用技术：自定义springboot启动器，asm字节码动态代理，简单实现消息中间件<br/><a href=\"https://github.com/hfkun/dtx-spring-boot-starter\" target=\"_blank\" class=\"btn btn-link\">查看源码</a>"},
-  {"title":"基于Netty的mvc框架", "time":"20.02", "abstract":"基于netty的mvc 框架<br/><a href=\"https://github.com/hfkun/netty-mvc\" target=\"_blank\" class=\"btn btn-link\">查看源码</a>"}
+  {"title":"基于Netty的mvc框架", "time":"20.02", "abstract":"类似springboot，在运用启动的时候回去扫描启动类所在包下面的控制器注解，使用netty通讯，接收http请求，根据请求地址，通过反射得到结果返回给客户端<br/><a href=\"https://github.com/hfkun/netty-mvc\" target=\"_blank\" class=\"btn btn-link\">查看源码</a>"}
 ]
