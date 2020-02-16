@@ -49,20 +49,20 @@
         body {background-color: #888888;}
         .c1, .c2, .c3, .c4 {width: 50%;height:50%; float:left;display: block; text-align: center;color: white;font-weight: bold;font-size:18px;opacity: 0.7;}
         a:link, a:visited { color: white; text-underline: none;}
-        a:hover { opacity: 1; text-underline: none;}
+        a:hover { opacity: 1; text-decoration: none;}
 
-        #circon {position: absolute;background-color: #286090;text-align: center;vertical-align: middle;cursor: pointer;}
+        #circon {position: absolute;background-color: #286090;color: white;text-align: center;vertical-align: middle;cursor: pointer;}
 
         .addw{
-            -webkit-transition: all 1200s ease-in-out;
-            -moz-transition: all 1200s ease-in-out;
-            transition: all 1200s ease-in-out;
+            -webkit-transition: all 20s ease-in-out;
+            -moz-transition: all 20s ease-in-out;
+            transition: all 20s ease-in-out;
         }
         .add {
-            -webkit-transform: rotate(36000deg);
-            -moz-transform: rotate(36000deg);
-            -ms-transform: rotate(36000deg);
-            transform: rotate(36000deg);
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            transform: rotate(360deg);
         }
     </style>
 </head>
@@ -77,6 +77,7 @@
 
 <script src="../../js/util.js"></script>
 <script src="../../lib/jquery-1.11.1.min.js"></script>
+<script src="../../lib/jquery-color.js"></script>
 <script>
 
     var pageHeight = HFK.Util.getPageHeight(window);
@@ -115,6 +116,7 @@
         "line-height":cirRadius+"px"
     });
 
+    var removeTurnIdx = -1;
     var ctxOffset = ctx.offset();
 
     $("#circon").css({
@@ -125,15 +127,31 @@
         "border-radius":(cirRadius/3)+"px",
         "line-height":(cirRadius*2/3)+"px"
     }).click(function(){
+        clearInterval(removeTurnIdx);
         ctx.toggleClass("addw").toggleClass("add");
+        addTimeout();
         $(this).html($(this).html() == "开始"?"停止":"开始");
     });
 
     ctx.addClass("addw").addClass("add");
-    setInterval(function(){
-		ctx.removeClass("addw").removeClass("add");
-        $("#circon").html("开始");
-    }, 1150000);
+    addTimeout();
+    function addTimeout(){
+        removeTurnIdx = setTimeout(function(){
+            ctx.removeClass("addw").removeClass("add");
+            $("#circon").html("开始");
+        }, 20000);
+    }
+
+    var bgcs = ['#888888', '#7CFA7C', '#F0F0F0'];
+    var bgIdx = 0;
+    changeBg();
+    function changeBg() {
+        bgIdx++;
+        bgIdx = bgIdx>2?bgIdx=0:bgIdx;
+        $("body").animate({
+            backgroundColor:bgcs[bgIdx]
+        }, 5000, changeBg);
+    }
 </script>
 
 </body>
