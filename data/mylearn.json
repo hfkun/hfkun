@@ -16,9 +16,7 @@
     {"title":"常用MVC控制器总结", "itemsrc":"https://www.zybuluo.com/hfkun/note/297220", "abstract":"web.xml配置 <servlet> <servlet-name>jerseyServlet</servlet-name> <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class> <init-param> <param-name>jersey.config.server.provider.packages</param-name>  <param-value>com.hfkun.test.controller</param-value>  </init-param> <load-on-startup>1</load-on-startup>"}
   ]},
   {"title":"开发工具", "children":[
-    {"title":"Maven 自动化部署", "itemsrc":"https://www.zybuluo.com/hfkun/note/509202", "abstract":"老是用eclipse打包war，手工发布到tomcat，重复多次确实有点烦，于是就来学学tomcat自动化部署。最简单的设置做起，步骤1：tomcat设置 tomcat-users.xml得配置用户"}
-  ]},
-  {"title":"开发工具", "children":[
-    {"title":"docker搭建redis集群", "itemsrc":"https://www.zybuluo.com/hfkun/note/1668599", "abstract":"听说会使用docker在工作中是一个加分项，好奇就学习一下，体验一把。安装还算简单，跑单个应用服务很简单，部署redis集群也不难，配置文件都可以在自己的虚拟机上，只需要给docker容器配置映射路径"}
+    {"title":"Maven 自动化部署", "itemsrc":"https://www.zybuluo.com/hfkun/note/509202", "abstract":"老是用eclipse打包war，手工发布到tomcat，重复多次确实有点烦，于是就来学学tomcat自动化部署。最简单的设置做起，步骤1：tomcat设置 tomcat-users.xml得配置用户"},
+	{"title":"docker搭建redis集群", "itemsrc":"https://www.zybuluo.com/hfkun/note/1668599", "abstract":"听说会使用docker在工作中是一个加分项，好奇就学习一下，体验一把。安装还算简单，跑单个应用服务很简单，部署redis集群也不难，配置文件都可以在自己的虚拟机上，只需要给docker容器配置映射路径"}
   ]}
 ]
