@@ -68,10 +68,10 @@
 </head>
 <body>
 <div id="cirnav">
-    <a class="c1" href="imgs/img.html" target="_blank">图片分享</a>
-    <a class="c2" href="media/media.html" target="_blank">视频分享</a>
-    <a class="c3" href="game/games.html" target="_blank">游戏分享</a>
-    <a class="c4" href="audio/audio.html" target="_blank">声音分享</a>
+    <a class="c1" href="imgs/img.html" target="_blank"></a>
+    <a class="c2" href="media/media.html" target="_blank"></a>
+    <a class="c3" href="game/games.html" target="_blank"></a>
+    <a class="c4" href="audio/audio.html" target="_blank"></a>
 </div>
 <div id="circon">停止</div>
 
@@ -79,7 +79,12 @@
 <script src="../../lib/jquery-1.11.1.min.js"></script>
 <script src="../../lib/jquery-color.js"></script>
 <script>
-
+    $(function(){
+        $(".c1").html("图片分享");
+        $(".c2").html("视频分享");
+        $(".c3").html("游戏分享");
+        $(".c4").html("声音分享");
+    })
     var pageHeight = HFK.Util.getPageHeight(window);
     var pageWidth = HFK.Util.getPageWidth(window);
     var cirRadius = pageHeight<pageWidth?(pageHeight/3):(pageWidth/3); //半径
