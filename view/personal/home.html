@@ -46,117 +46,97 @@
 	<!-- windows phone 点击无高光 -->
 	<meta name="msapplication-tap-highlight" content="no">
     <style>
-        body {background-color: #888888;}
-        .c1, .c2, .c3, .c4 {width: 50%;height:50%; float:left;display: block; text-align: center;color: white;font-weight: bold;font-size:18px;opacity: 0.7;}
-        a:link, a:visited { color: white; text-underline: none;}
-        a:hover { opacity: 1; text-decoration: none;}
-
-        #circon {position: absolute;background-color: #286090;color: white;text-align: center;vertical-align: middle;cursor: pointer;}
-
-        .addw{
-            -webkit-transition: all 20s ease-in-out;
-            -moz-transition: all 20s ease-in-out;
-            transition: all 20s ease-in-out;
+        body {background-color: #F2F2F2;}
+        a, a:link, a:visited, a:hover { color: #048BF3; text-decoration: none; }
+        #cirnav a{position: relative;display: block;}
+        #cirnav a:before{
+            content: "";
+            display: block;
+            position: absolute;
+            left: 30%;
+            top: 50%;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            width: 6px;
+            height: 6px;
+            background: #2C8DFB;
+            opacity: .4;
+            -webkit-transition: All 0.5s ease;
         }
-        .add {
-            -webkit-transform: rotate(360deg);
-            -moz-transform: rotate(360deg);
-            -ms-transform: rotate(360deg);
-            transform: rotate(360deg);
+        #cirnav a:hover:before{width: 20px;opacity: 1;}
+        #cirnav a:hover { opacity: 1; text-decoration: none;background-color: #EDEDED;box-shadow: 5px 5px 10px #E0E0E0;}
+
+        #head{
+            height: 80px;
+            color: #048BF3;
+            border-bottom: 1px solid #DCDFE6;
+            margin: 0 8%;
+        }
+        #head .logo{
+            margin-top: 23px;
+            float: left;
+            background: url("../../logo_28_28.png") no-repeat;
+            padding-left: 30px;
+            padding-top: 3px;
+            height: 40px;
+        }
+        #head .single-menu{
+            line-height: 80px;
+            float: right;
+        }
+        #head .single-menu a{
+            margin-right: 10px;
+            opacity: 0.6;
+        }
+        #head .single-menu a:hover{
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-<div id="cirnav">
-    <a class="c1" href="imgs/img.html" target="_blank"></a>
-    <a class="c2" href="media/media.html" target="_blank"></a>
-    <a class="c3" href="game/games.html" target="_blank"></a>
-    <a class="c4" href="audio/audio.html" target="_blank"></a>
+<div id="head">
+<div class="logo">Hfkun</div>
+<div class="single-menu">
+    <a href="imgs/img.html" target="_blank">图片</a>
+    <a href="media/media.html" target="_blank">视频</a>
+    <a href="game/games.html" target="_blank">游戏</a>
+    <a href="audio/audio.html" target="_blank">声音</a>
 </div>
-<div id="circon">停止</div>
+</div>
+<div id="cirnav">
+    <a href="imgs/img.html" target="_blank">图片分享</a>
+    <a href="media/media.html" target="_blank">视频分享</a>
+    <a href="game/games.html" target="_blank">游戏分享</a>
+    <a href="audio/audio.html" target="_blank">声音分享</a>
+</div>
 
 <script src="../../js/util.js"></script>
 <script src="../../lib/jquery-1.11.1.min.js"></script>
-<script src="../../lib/jquery-color.js"></script>
 <script>
     $(function(){
-        $(".c1").html("图片分享");
-        $(".c2").html("视频分享");
-        $(".c3").html("游戏分享");
-        $(".c4").html("声音分享");
     })
     var pageHeight = HFK.Util.getPageHeight(window);
     var pageWidth = HFK.Util.getPageWidth(window);
-    var cirRadius = pageHeight<pageWidth?(pageHeight/3):(pageWidth/3); //半径
-    var mTop = pageHeight<pageWidth?(pageHeight/2-cirRadius):(pageWidth/2-cirRadius); //距离顶端
+    var cirRadius = pageHeight<pageWidth?(pageHeight-180)/2:(pageWidth-100)/2; //半径
+    var mTop = 50; //距离顶端
     var ctx = $("#cirnav").css({
         width:(cirRadius*2)+"px",
         height:(cirRadius*2)+"px",
         margin: "auto",
         "margin-top":mTop+"px",
-        border:"1px solid gray",
+        border:"1px solid #2C8DFB",
         "border-radius":cirRadius+"px",
-        "box-shadow":"5px 2px 6px",
-        "-webkit-box-shadow":"5px 2px 6px",
-        "-moz-box-shadow":"5px 2px 6px"
+        "box-shadow":"5px 2px 6px #ADE5F7",
+        "-webkit-box-shadow":"5px 2px 6px #ADE5F7",
+        "-moz-box-shadow":"5px 2px 6px #ADE5F7",
+        "overflow":"hidden"
     });
-    $("#cirnav .c1").css({
-        "background-color": "#C0504D",
-        "border-radius":cirRadius+"px 0 0 0",
-        "line-height":cirRadius+"px"
+    $("#cirnav a").css({
+        "height": cirRadius/2+"px",
+        "line-height":cirRadius/2+"px",
+        "text-align": "center"
     });
-    $("#cirnav .c2").css({
-        "background-color": "#4F81BD",
-        "border-radius":"0 "+cirRadius+"px 0 0",
-        "line-height":cirRadius+"px"
-    });
-    $("#cirnav .c3").css({
-        "background-color": "#8064A2",
-        "border-radius":"0 0 0 "+cirRadius+"px",
-        "line-height":cirRadius+"px"
-    });
-    $("#cirnav .c4").css({
-        "background-color": "#9BBB59",
-        "border-radius":"0 0 "+cirRadius+"px 0",
-        "line-height":cirRadius+"px"
-    });
-
-    var removeTurnIdx = -1;
-    var ctxOffset = ctx.offset();
-
-    $("#circon").css({
-        width:(cirRadius*2/3)+"px",
-        height:(cirRadius*2/3)+"px",
-        left:(ctxOffset.left+cirRadius*2/3)+"px",
-        top:(ctxOffset.top+cirRadius*2/3)+"px",
-        "border-radius":(cirRadius/3)+"px",
-        "line-height":(cirRadius*2/3)+"px"
-    }).click(function(){
-        clearInterval(removeTurnIdx);
-        ctx.toggleClass("addw").toggleClass("add");
-        addTimeout();
-        $(this).html($(this).html() == "开始"?"停止":"开始");
-    });
-
-    ctx.addClass("addw").addClass("add");
-    addTimeout();
-    function addTimeout(){
-        removeTurnIdx = setTimeout(function(){
-            ctx.removeClass("addw").removeClass("add");
-            $("#circon").html("开始");
-        }, 20000);
-    }
-
-    var bgcs = ['#888888', '#7CFA7C', '#F0F0F0'];
-    var bgIdx = 0;
-    changeBg();
-    function changeBg() {
-        bgIdx++;
-        bgIdx = bgIdx>2?bgIdx=0:bgIdx;
-        $("body").animate({
-            backgroundColor:bgcs[bgIdx]
-        }, 5000, changeBg);
-    }
 </script>
 
 </body>
