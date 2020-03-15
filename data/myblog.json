@@ -12,7 +12,8 @@
   {"title":"Javascript作用域和变量申明提升", "time":"2016-04-08", "itemsrc":"https://www.zybuluo.com/hfkun/note/338641", "abstract":"如果变量在函数体类声明，则它是函数作用域。否则，它是全局作用域（作为global的属性）。变量将会在执行进入作用域的时候被创建。块不会定义新的作用域，只有函数声明和程序才会创造新的作用域。变量在创建的时候会被初始化为undefined。如果变量声明语句里面带有赋值操作，则赋值操作只有被执行到的时候才会发生，而不是创建的时候。"},
   {"title":"RMI 初识", "time":"2016-09-19", "itemsrc":"https://www.zybuluo.com/hfkun/note/506178", "abstract":"上次遇到一个问题，需要从一个WEB项目A中访问另一个WEB项目B的servlet，用的解决办法是 HttpClient，后来突然想到，如果没有http，java程序之间怎么通讯呢，于是就来了RMI。Java RMI 指的是远程方法调用 (Remote Method Invocation)。它是一种机制，能够让在某个 Java 虚拟机上的对象调用另一个 Java 虚拟机中的对象上的方法。"},
   {"title":"MySQL 事务隔离级别、乐观锁和悲观锁 新感", "time":"2016-12-24", "itemsrc":"https://www.zybuluo.com/hfkun/note/611662", "abstract":"隔离级别决定了一个session中的事务可能对另一个session的影响、并发session对数据库的操作、一个session中所见数据的一致性。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁"},
-  {"title":"都是分布式事务惹的祸", "time":"2020-02-29", "itemsrc":"https://www.zybuluo.com/hfkun/note/1671104", "abstract":"因项目业务，需要开发一个贷款进件功能，业务描述：渠道方发送贷款申请，推送申请信息，我们要将申请信息落库，然后推到RocketMQ消息队列，返回渠道方。曾怀疑过是不是Mybatis的问题，最后才发现，是为了实现分布式事务，导致是本地事务还没提交，MQ消息已经发出去了，所以MQ消息消费失败。。。"}
+  {"title":"都是分布式事务惹的祸", "time":"2020-02-29", "itemsrc":"https://www.zybuluo.com/hfkun/note/1671104", "abstract":"因项目业务，需要开发一个贷款进件功能，业务描述：渠道方发送贷款申请，推送申请信息，我们要将申请信息落库，然后推到RocketMQ消息队列，返回渠道方。曾怀疑过是不是Mybatis的问题，最后才发现，是为了实现分布式事务，导致是本地事务还没提交，MQ消息已经发出去了，所以MQ消息消费失败。。。"},
+  {"title":"抽奖算法之 Java and Javascript", "time":"2020-03-15", "itemsrc":"https://www.zybuluo.com/hfkun/note/1677969", "abstract":"经朋友推荐，看到一个很有意思的算法题，设计抽奖的算法，经过多次尝试，找到了自认为比较快的Java实现，本想用javascript实现的，发现时间上更慢了，于是乎研究了一番..."}
 
   
 ]
